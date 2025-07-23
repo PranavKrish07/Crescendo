@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crescendo - Reach your top</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header class="header-landing">
+            <h1 class="title">Crescendo</h1>
+        <nav>
+            <ul class="nav">
+                <li>About</li>
+                <li>How it works</li>
+                <li>Pricing</li>
+            </ul>
+        </nav>
+        <button class="signup">Sign up</button>
+    </header>
+    <section class="journey-section">
+        <h2 class="amplify">Amplify your <br> productivity</h2>
+        <p class="byline">Crescendo transforms your daily tasks into a rewarding adventure. <br>
+             Level up your life, one goal at a time, and compose your own <br> symphony of success.</p>     
+        <a href="/home/"><button class="start-button"> Start Journey</button></a>   
+    </section>
+
+    <section class="features-title">
+        <h2>Features</h2>
+    </section>
+    <section class="features-section">
+        <div class="box">
+            <h3>Stats system</h3>
+            <p>Helps in increasing various physical and mental stats based on a predefined milestone system</p>
+                
+        </div>
+        <div class="box">
+            <h3>class selection</h3>
+            <p>The user will be assigned a class(knight, Ninja, Samurai) based on their traits. I will be calculated using a quick quiz</p>
+        </div>
+        <div class="box">
+            <h3>Levelling system</h3>
+            <p>Based on their class several subclassesn will be noted. Each subclass defined each level</p>
+        </div>
+    </section>
+</body>
+</html>

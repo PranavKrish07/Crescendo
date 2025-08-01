@@ -1,0 +1,14 @@
+{% extends "home.html" %}
+{% block title %}Mental Stats{% endblock %}
+    {% block content %}
+    <section>
+        <h2>Mental Stats</h2>
+        <div class="classification">
+            {% for stat in mental %}
+            <div class="stats-division">
+                <h3>{{stat.name}}</h3>
+            </div>
+            {% endfor%}
+        </div>
+    </section>
+    {% endblock%}

@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crescendo - Reach your top</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="upper-header">
+            <p>Crescendo</p>
+            <button>Sign out</button>
+        </div>
+        <div class="profile">
+            <div class="inner-profile-section">
+            <img src="https://i.ibb.co/ZRJh8zTd/Gemini-Generated-Image-3ljvku3ljvku3ljv.png" alt="profile" height="80" weight="80">
+            <div>
+                <p class="name">Name</p>
+                <p class="class">Class</p>
+                <div class="xp-section">
+                    <label>Exp:</label>
+                    <progress class="progress" value="40" max="100"></progress>
+                    <label>:sub-class</label>
+                </div>
+            </div>
+            </div>
+            <div class="quests-profile">
+                <p class="name">Quests completed</p>
+                <div class="inner-profile-section">
+                    {% for difficulty in difficulties%}
+                    <p><strong>{{difficulty.name}}:</strong> {{difficulty.completed}}</p>
+                    {%endfor%}
+                </div>
+            </section>
+        </div>
+    </header>
+    <main>
+    {% block content %}
+    <h2>Stats</h2>
+    <section class="stats">
+        
+        <div class="classification">
+            <div class="physical">
+                <h3>Physical</h3>
+                <div>
+                    {% for stat in physical %}
+                    <label for="{{stat.name}}">{{stat.symbol}}: <label><progress class="stat" max="5" value="2"></progress><br>
+                    {% endfor %}
+                </div>
+                <a href="/physicalstats/"><button>Open</button></a>
+            </div>
+            <div class="physical">
+                <h3>Mental</h3>
+                <div>
+                    {% for stat in mental %}
+                    <label for="{{stat.name}}">{{stat.symbol}}: <label><progress class="stat" max="5" value="2"></progress><br>
+                    {% endfor %}
+                </div>
+
+                <a href="/mentalstats/"><button>Open</button></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="Quests-section">
+        <h2>Quests</h2>
+        <div class="classification">
+            {%for difficulty in difficulties%}
+            <div class="Quests">
+                <h3>{{difficulty.name}}</h3>
+                <p>In progress: {{difficulty.in_progress}}</p>
+                <p>Not started: {{difficulty.completed}}</p>
+                <a href="/{{difficulty.name}}s/"><button>Open {{difficulty.name}}s</button></a>
+            </div>
+            {%endfor%}
+        </div>
+    </section>
+    <section>
+    </section>
+    {% endblock %}
+    </main>
+</body>
+</html>

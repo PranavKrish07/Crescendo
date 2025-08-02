@@ -10,7 +10,6 @@
             <label><input type="radio" name="option{{question.id}}" value="A">{{question.option_a}}</label><br>
             <label><input type="radio" name="option{{question.id}}" value="B"> {{question.option_b}}</label><br>
             <label><input type="radio" name="option{{question.id}}" value="C"> {{question.option_c}}</label>
-            <button class="clear" onclick="this.closest('.question').querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);">Clear</button>
         </div>
         {%endfor%}
         <button type="submit">Get your class</button>

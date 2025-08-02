@@ -9,8 +9,10 @@ def home(request):
     classes = Class.objects.all()
     ranks = Rank.objects.all()
     difficulties = Difficulty.objects.all()
+    user_quiz_class = request.session.get('quiz_class', None)
 
-    return render(request, 'home.html', {'physical': physical, 'mental': mental, 'classes': classes, 'ranks': ranks, 'difficulties': difficulties})
+
+    return render(request, 'home.html', {'class':user_quiz_class, 'physical': physical, 'mental': mental, 'classes': classes, 'ranks': ranks, 'difficulties': difficulties})
 
 def physicalstats(request):
     physical = PhysicalStat.objects.all()
@@ -22,4 +24,29 @@ def mentalstats(request):
 
 def quiz(request):
     questions = Quiz.objects.all()
+    if request.method == 'POST':
+        # Initialize a dictionary to hold the score for each option
+        scores = {
+            'A': 0,
+            'B': 0,
+            'C': 0,
+        }
+
+        class_map = {
+            'A': 'Knight',
+            'B': 'Samurai',
+            'C': 'Ninja'
+        }
+        
+        for key, value in request.POST.items():
+            if key.startswith('option'):
+                if value in scores:
+                    scores[value] += 1
+        highest_option = max(scores, key=scores.get)
+        final_class = class_map.get(highest_option, 'Undetermined') 
+        request.session['quiz_class'] = final_class
+        return render(request, 'results.html', {'final_class': final_class})
+
+
+
     return render(request, 'quiz.html', {'questions': questions})

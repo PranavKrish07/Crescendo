@@ -1,0 +1,147 @@
+{% extends "index.html" %}
+{% block content %}
+<style>
+    /* For a larger project, you would move this CSS to a separate file.
+    But for a single page, placing it here is quick and easy. 
+    */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    .result-body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f4f2ff; /* Light lavender background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+    }
+
+    .result-card {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+        border-top: 5px solid #7c3aed; /* Theme purple accent */
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .result-card h2 {
+        color: #58506b;
+        font-weight: 600;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .result-class {
+        color: #7c3aed;
+        font-weight: 700;
+        font-size: 3rem;
+        margin: 10px 0;
+    }
+
+    .result-description {
+        color: #58506b;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 30px;
+    }
+
+    .score-breakdown {
+        margin-top: 30px;
+        border-top: 1px solid #e0e0e0;
+        padding-top: 20px;
+    }
+
+    .score-breakdown h4 {
+        color: #58506b;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .score-breakdown ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .score-breakdown li {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        background-color: #f9f7ff;
+        font-weight: 600;
+        color: #3d3750;
+    }
+    .score-breakdown li span {
+        font-weight: 400;
+        color: #7c3aed;
+    }
+
+    .dashboard-btn {
+        display: inline-block;
+        background-color: #7c3aed;
+        color: #ffffff;
+        padding: 12px 30px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 30px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .dashboard-btn:hover {
+        background-color: #6d2fd3;
+        transform: translateY(-2px);
+    }
+
+</style>
+
+<div class="result-body">
+    <div class="result-card">
+        <h2>Your determined class is...</h2>
+        
+        <h1 class="result-class">
+            {{ final_class }}
+            
+            {# Add a fun icon based on the class #}
+            {% if final_class == 'Knight' %}
+                ⚔️
+            {% elif final_class == 'Samurai' %}
+                🎴
+            {% elif final_class == 'Ninja' %}
+                🥷
+            {% endif %}
+        </h1>
+        
+        <p class="result-description">
+            {# Add a nice description for each class #}
+            {% if final_class == 'Knight' %}
+                Honorable and direct, you face challenges head-on with unwavering courage. You are a symbol of strength and reliability.
+            {% elif final_class == 'Samurai' %}
+                Patient and observant, you master your craft through discipline and precision, striking only when the moment is perfect.
+            {% elif final_class == 'Ninja' %}
+                Cunning and adaptable, you use the environment to your advantage, finding clever solutions where others see only obstacles.
+            {% else %}
+                Your path is unique, a blend of different strengths.
+            {% endif %}
+        </p>
+
+        <a href="/home/" class="dashboard-btn">Go to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

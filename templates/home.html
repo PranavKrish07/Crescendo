@@ -15,8 +15,13 @@
         </div>
         <div class="profile">
             <div class="inner-profile-section">
-            <img src="https://i.ibb.co/ZRJh8zTd/Gemini-Generated-Image-3ljvku3ljvku3ljv.png" alt="profile" height="80" weight="80">
-            <div>
+            {% if class == 'Knight' %}
+                <img src="https://i.ibb.co/twLHfDh5/Gemini-Generated-Image-p8okcxp8okcxp8ok.png"  alt="profile" height="80" width="80">
+            {% elif class == 'Samurai' %}
+                <img src="https://i.ibb.co/MxHct05q/Gemini-Generated-Image-gwl17bgwl17bgwl1.png"  alt="profile" height="80" width="80">
+            {% elif class == 'Ninja' %}
+                <img src="https://i.ibb.co/6fRgT6t/Gemini-Generated-Image-7f29sf7f29sf7f29.png"  alt="profile" height="80" width="80">
+            {% endif %}            <div>
                 <p class="name">Name</p>
                 <p class="class">{{class}}</p>
                 <div class="xp-section">

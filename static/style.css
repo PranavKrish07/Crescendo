@@ -411,3 +411,8 @@
     box-shadow: 0 4px 10px rgba(141, 22, 251, 0.2); /* Subtle shadow for clear button */
     transition: background-color 0.2s ease, color 0.2s ease;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+}

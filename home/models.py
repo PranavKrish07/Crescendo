@@ -6,24 +6,28 @@ class Class(models.Model):
     def __str__(self):
         return self.name
 
+class Rank(models.Model):
+    symbol = models.CharField(max_length=1)
+    
+    def __str__(self):
+        return self.symbol
+
 class PhysicalStat(models.Model):
     name = models.CharField(max_length=100)
-    symbol = models.CharField(max_length=10)    
+    symbol = models.CharField(max_length=10)
+    rank = models.ForeignKey(Rank, on_delete=models.CASCADE, default='E')
+        
     def __str__(self):
         return self.name
 
 class MentalStat(models.Model):
     name = models.CharField(max_length=100)
     symbol = models.CharField(max_length=10)
-    
+    rank = models.ForeignKey(Rank, on_delete=models.CASCADE)
+   
     def __str__(self):
         return self.name
     
-class Rank(models.Model):
-    symbol = models.CharField(max_length=1)
-    
-    def __str__(self):
-        return self.symbol
 
 class Difficulty(models.Model):
     name = models.CharField(max_length=100)

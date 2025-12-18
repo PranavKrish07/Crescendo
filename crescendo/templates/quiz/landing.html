@@ -1,11 +1,47 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crescendo - Take quiz</title>
+    <title>Crescendo - Build your best self. Track your ascent.</title>
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+    
 </head>
 <body>
-   <a href="/quiz/1/"><button>Take Quiz</button></a>
+    <div class="quiz-landing-page">
+
+        <div class="quiz-cover-container">
+            <h1 class="quiz-cover-title">⚔️ Crescendo</h1>
+            <p class="quiz-cover-subtitle">Level up your life, one task at a time.</p>
+            <p class="quiz-cover-description">
+                Discover your productivity archetype and unlock a personalized roadmap to sustainable growth. 
+                Start your journey with a quick quiz designed just for you.
+            </p>
+
+            <button class="quiz-start-button" onclick="window.location.href='/quiz/1';">Start Your Quiz</button>
+
+            <div class="quiz-features">
+                <div class="quiz-feature-badge">
+                    <div class="quiz-feature-badge-icon">🏆</div>
+                    <div class="quiz-feature-badge-text">Earn Trophies</div>
+                </div>
+                <div class="quiz-feature-badge">
+                    <div class="quiz-feature-badge-icon">📈</div>
+                    <div class="quiz-feature-badge-text">Track Progress</div>
+                </div>
+                <div class="quiz-feature-badge">
+                    <div class="quiz-feature-badge-icon">⚡</div>
+                    <div class="quiz-feature-badge-text">Level Up</div>
+                </div>
+                <div class="quiz-feature-badge">
+                    <div class="quiz-feature-badge-icon">🎯</div>
+                    <div class="quiz-feature-badge-text">Stay Focused</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

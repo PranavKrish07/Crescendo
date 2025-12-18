@@ -5,17 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
     <title>Crescendo - Quiz</title>
 </head>
-<body>
-    <p>Quiz ID is {{key}}</p>
-    <h2>{{ question.text }}</h2>
-    <form method="POST">
-        {% csrf_token %}
-        <input type="radio" name="selected" value="a" required><label for="a">{{ question.option_a }}</label><br>
-        <input type="radio" name="selected" value="b"><label for="b">{{ question.option_b }}</label><br>
-        <input type="radio" name="selected" value="c"><label for="c">{{ question.option_c }}</label><br>
-        <button type="submit">Next</button>
-    </form>
+<body class="quiz-page-body">
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <div class="quiz-counter">Question {{ key }}</div>
+            <h1 class="quiz-title">Find Your Class</h1>
+        </div>
+
+        <div class="quiz-card">
+            <h2 class="question-text">{{ question.text }}</h2>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <div class="options-container">
+                    <input type="radio" id="option-a" name="selected" value="a" class="option-input" required>
+                    <label for="option-a" class="option-label">
+                        <span class="custom-radio"></span>
+                        {{ question.option_a }}
+                    </label>
+
+                    <input type="radio" id="option-b" name="selected" value="b" class="option-input">
+                    <label for="option-b" class="option-label">
+                        <span class="custom-radio"></span>
+                        {{ question.option_b }}
+                    </label>
+
+                    <input type="radio" id="option-c" name="selected" value="c" class="option-input">
+                    <label for="option-c" class="option-label">
+                        <span class="custom-radio"></span>
+                        {{ question.option_c }}
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-button">Next Question</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>     

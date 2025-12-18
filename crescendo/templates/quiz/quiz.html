@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <title>Crescendo - Quiz</title>
+</head>
+<body>
+    <p>Quiz ID is {{key}}</p>
+    <h2>{{ question.text }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="radio" name="selected" value="a" required><label for="a">{{ question.option_a }}</label><br>
+        <input type="radio" name="selected" value="b"><label for="b">{{ question.option_b }}</label><br>
+        <input type="radio" name="selected" value="c"><label for="c">{{ question.option_c }}</label><br>
+        <button type="submit">Next</button>
+    </form>
+</body>
+</html>     

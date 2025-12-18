@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Crescendo</title>
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+
+</head>
+<body class="authentication-body">
+    <section class="auth-form">
+        <div>
+        <h1>Welcome Back</h1>
+        <form method="POST">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Email" required><br>
+        <input type="password" name="password" autocomplete="off" placeholder="Password" required><br>
+        <button class="submit-button" type="submit">log in</button>
+        </form>
+        <p>New to Crescendo? <a class="switch" href="/auth/signup/">Signup</a></p>
+
+        </div>
+        <img src="https://i.ibb.co/Y4zczRry/Gemini-Generated-Image-kcpoakkcpoakkcpo.png" alt="Gemini-Generated-Image-kcpoakkcpoakkcpo" border="0">
+    </section>
+    
+</body>
+</html>

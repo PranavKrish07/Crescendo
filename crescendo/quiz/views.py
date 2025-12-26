@@ -54,7 +54,6 @@ def quiz_result(request):
     if user_class and request.user.is_authenticated:
         # Get the profile for the logged in user
         profile, created = User_profile.objects.get_or_create(user=request.user)
-        
         profile.user_class = user_class
         profile.is_quiz_completed = True
         profile.save()
@@ -68,3 +67,4 @@ def quiz_result(request):
         'user_class': user_class,
     }
     return render(request, 'quiz/result.html', context)
+ 

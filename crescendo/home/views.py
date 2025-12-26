@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from .models import User_profile
 
 def index(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/home/')
     return render(request, 'index.html')
 
 @login_required

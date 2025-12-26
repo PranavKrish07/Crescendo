@@ -1,5 +1,21 @@
-<h2>Quiz Result</h2>
-
-<h3>Your class: {{ user_class }}</h3>
-
-<button onclick="window.location.href='/home/'">Go to Home</button>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+    <title>Crescendo - Result</title>
+</head>
+<body>
+     <section class="quiz-landing-page">
+        <div class="quiz-start-card">
+            <p class="upper">Congratulations! Your class is</p>
+            <img src="{% static 'images/' %}{{ user_class }}.png" class="class-preview-img" alt="PROFILE" border="0">
+            <h1 class="user-class"> {{ user_class }}</h1>
+            <button class="go-to-home" onclick="window.location.href='/home/'">Go to Home</button>
+        </div>
+    </section>
+</body>
+</html> 

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from .models import User
 
@@ -30,3 +30,8 @@ def login_view(request):
         else:
             return render(request, "auth/login.html", {"error": "Invalid credentials"})
     return render(request, "auth/login.html")
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect("/")

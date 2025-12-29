@@ -1,13 +1,48 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crescendo - Home</title>
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+
 </head>
 <body>
-  <h1>Welcome back, {{ user_details.user }}!</h1>
-  <p>{{ user_details.user_class }}</p>
-  <p>Level {{ user_details.level }}</p>
+  <header class="main-header" style=" height: 8vh; padding: 1px 10px;">
+    <div class="header-content" style="justify-content: space-between;">
+      <img class="home-logo" src="https://i.ibb.co/bjZNMwRC/Crescendo-logo.png" alt="Crescendo-logo" border="0">   
+      <button class="logout-button-home" onclick="logout()">Logout</button>
+    </div>
+  </header>
+  <section class="user-profile">
+    <div>
+      <img src="{% static 'images/' %}{{ user_details.user_class }}.png" class="profile-image" alt="profile-image" border="0">
+      <p class="sub-class-display">{{ user_details.user_class }}</p>
+    </div>
+    <div class="name-and-level">
+        <p class="username">{{ user_details.user }} : Level {{ user_details.level }}</p>
+      <progress class="level-progress" value="{{ xp_progress }}" max="{{ level_range }}"></progress><label for="level-progress">{{ user_details.xp }} / {{ level_range }}</label>
+      <div>
+        <p>Total xp gained: {{user_details.xp}}</p>
+        <p>XP required for next level: {{ xp_to_gain }}</p>
+      </div>
+    </div>
+    <div class="quests-count">
+      <p>Current active quests: --</p>
+      <p>Total quests completed: --</p>
+    </div>
+  </section>
+
+  <section style="margin-top: 100vh;">
+
+  </section>
+
+  <script>
+    function logout() {
+      window.location.href = '/auth/logout/';
+    }
+  </script>
 </body>
 </html>

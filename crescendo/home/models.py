@@ -27,3 +27,21 @@ class User_profile(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+class List(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    difficulty = models.CharField(max_length=50, default='Easy')
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.name} - {self.user.username}"
+    
+class Task(models.Model):
+    list = models.ForeignKey(List, on_delete=models.CASCADE)
+    task = models.CharField(max_length=255)
+    is_completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.task

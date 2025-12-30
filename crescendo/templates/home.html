@@ -30,15 +30,64 @@
       </div>
     </div>
     <div class="quests-count">
-      <p>Current active quests: --</p>
-      <p>Total quests completed: --</p>
+      <p>Current active quests: {{ Quests.count }}</p>
+      <p>Total quests completed: {{ completed_quests.count }}</p>
     </div>
   </section>
-
-  <section style="margin-top: 100vh;">
-
+  <section class="quests-body">
+  <section class="quests-section">
+    <div class="active-heading">
+      <h1 class="heading">Active Quests</h1>
+      {% if Quests.count != 0 %}
+      <details class="dropdown">
+        <summary class="add-quest-button">+</summary>
+        <form method="post" class="add-quest-form">
+          {% csrf_token %}
+          {{ listform }}
+          <button type="submit">Add Quest</button>
+        </form>
+      </details>
+    </div>
+      {% for quest in Quests %}
+        <p>{{ quest.name }} - {{quest.created_at}}</p>
+      {% endfor %}
+    {% else %}
+    </div>
+      <div class="empty">
+        <p>No active quests available. Click to add new quest</p>
+        <details class="dropdown">
+        <summary class="add-quest-button">+</summary>
+        <form method="post">
+          {% csrf_token %}
+          <div class="add-quest-form">
+            {% for field in listform %}
+            {{ field }}
+            {% endfor %}
+            <button type="submit">Add Quest</button>
+          </div>
+        </form>
+      </details>
+      </div>
+    {% endif %}
   </section>
-
+  <section>
+    <h1 class="stat-heading">Stats</h1>
+    {% for stat in mental_stats %}
+    <div class="stat-card">
+      <h2>{{ stat.name }}: Rank {{ stat.rank }}</h2>
+      <p>Type: Mental</p>
+      <progress class="stat-progress" value="{{ stat.trophies }}" max="100"></progress><label for="stat-progress">{{ stat.trophies }} trophies</label>
+    </div>
+    {% endfor %}
+    {% for stat in physical_stats %}
+    <div class="stat-card">
+      <h2>{{ stat.name }}: Rank {{ stat.rank }}</h2>
+      <p>Type: Physical</p>
+      <progress class="stat-progress" value="{{ stat.trophies }}" max="100"></progress><label for="stat-progress">{{ stat.trophies }} trophies</label>
+    </div>
+    {% endfor %}
+  </section>
+  </section>
   <script>
     function logout() {
       window.location.href = '/auth/logout/';

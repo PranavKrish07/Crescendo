@@ -1,0 +1,15 @@
+{% extends "home.html" %}
+{% block title %}Crescendo - Quest{% endblock title %}
+{% block content %}
+<h1>{{ quest_name }}</h1>
+{% for task in quest_tasks %}
+    <ul>
+        <li>{{task.task}}</li>
+    </ul>
+{% endfor %}
+<form method="POST">
+    {% csrf_token %}
+    {{ taskForm.as_p }}
+    <button type="submit">Add Task</button>
+</form>
+{% endblock content %}

@@ -1,8 +1,11 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import User_profile, List
-from .forms import ListForm
+from .models import User_profile, List, Task
+from .forms import ListForm, TaskForm
+from django.forms import modelformset_factory
+
+checkboxformset = modelformset_factory(Task, fields=('is_completed',), extra=0)
 
 def index(request):
     if request.user.is_authenticated:
@@ -92,3 +95,30 @@ def home(request):
                                          'listform': listform,
                                          'mental_stats': mental_stats,
                                          'physical_stats': physical_stats})
+
+@login_required
+def delete_quest(request, quest_id):
+    quest = List.objects.filter(id=quest_id, user=request.user).first()
+    if not quest:
+        raise Http404("Quest not found")
+    quest.delete()
+    return HttpResponseRedirect('/home/')
+
+@login_required
+def openQuest(request, quest_name):
+    quest = List.objects.filter(name=quest_name, user=request.user).first()
+    if not quest:
+        raise Http404("Quest not found")
+    quest_tasks = Task.objects.filter(list=quest)
+
+    taskForm = TaskForm()
+    
+    if request.method == "POST":
+        taskForm = TaskForm(request.POST)
+        if taskForm.is_valid():
+            new_task = taskForm.save(commit=False)
+            new_task.list = quest
+            new_task.save()
+            return HttpResponseRedirect(f'/{quest_name}/')
+
+    return render(request, 'openQuest.html', {'quest_tasks': quest_tasks, 'quest_name': quest.name, 'taskForm':taskForm})

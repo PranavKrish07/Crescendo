@@ -818,6 +818,7 @@ a.switch:focus {
     font-size: 18px;
     border: 2px dashed rgba(2, 171, 151, 0.737);
     border-radius: 20px;
+    margin-bottom: 4rem;
 }
 
 summary {

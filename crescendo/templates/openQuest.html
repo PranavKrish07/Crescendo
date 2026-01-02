@@ -2,14 +2,60 @@
 {% block title %}Crescendo - Quest{% endblock title %}
 {% block content %}
 <h1>{{ quest_name }}</h1>
-{% for task in quest_tasks %}
-    <ul>
-        <li>{{task.task}}</li>
-    </ul>
-{% endfor %}
-<form method="POST">
+<progress value="{{ completed_tasks }}" max="{{ total_tasks }}"></progress>
+
+<form method="POST" id="checkpoints-form">
     {% csrf_token %}
-    {{ taskForm.as_p }}
-    <button type="submit">Add Task</button>
+    {{ formset.management_form }}
+
+    <h3>Pending Tasks</h3>
+    <ul class="checkpoints">
+        {% for form in formset %}
+            {% if not form.is_completed.value %}
+                <li>
+                    {{ form.id }} 
+                    {{ form.is_completed }} {{ form.instance.task }}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <h3>Completed Tasks</h3>
+    <ul class="checkpoints completed-list" style="opacity: 0.6;">
+        {% for form in formset %}
+            {% if form.is_completed.value %}
+                <li>
+                    {{ form.id }} 
+                    {{ form.is_completed }} <strike>{{ form.instance.task }}</strike>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    
+    <input type="hidden" name="action" value="update_tasks">
 </form>
+
+<div class="add_task">
+    <form method="POST">
+        {% csrf_token %}
+        {{ taskForm.as_p }}
+        <button type="submit" name="action" value="add_task">Add Task</button>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('checkpoints-form');
+    // Using a class selector is safer if you add more checkboxes later
+    const checkboxes = form.querySelectorAll('.checkpoints input[type="checkbox"]');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            form.submit();
+        });
+    });
+});
+</script>
 {% endblock content %}

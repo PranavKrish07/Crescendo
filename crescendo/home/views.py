@@ -53,8 +53,6 @@ def home(request):
     xp_progress = user_profile.xp - previous_level_threshold
     xp_to_gain = level_range - xp_progress
     # trophies ranges
-    
-
     Quests = List.objects.filter(user=request.user, is_completed=False)
     completed_quests = List.objects.filter(user=request.user, is_completed=True)
 
@@ -110,15 +108,29 @@ def openQuest(request, quest_name):
     if not quest:
         raise Http404("Quest not found")
     quest_tasks = Task.objects.filter(list=quest)
+    completed_tasks = quest_tasks.filter(is_completed=True).count()
+    total_tasks = quest_tasks.count()
 
+    if completed_tasks == total_tasks:
+        quest.is_completed = True
+        quest.save()
+    #forms
     taskForm = TaskForm()
+    formset = checkboxformset(queryset=quest_tasks)
     
-    if request.method == "POST":
-        taskForm = TaskForm(request.POST)
-        if taskForm.is_valid():
-            new_task = taskForm.save(commit=False)
-            new_task.list = quest
-            new_task.save()
-            return HttpResponseRedirect(f'/{quest_name}/')
-
-    return render(request, 'openQuest.html', {'quest_tasks': quest_tasks, 'quest_name': quest.name, 'taskForm':taskForm})
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'add_task':
+            form = TaskForm(request.POST)
+            if form.is_valid():
+                new_task = form.save(commit=False)
+                new_task.list = quest
+                new_task.save()
+                return HttpResponseRedirect(f"/{quest.name}/")
+        elif action == 'update_tasks':
+            formset = checkboxformset(request.POST, queryset=quest_tasks)
+            if formset.is_valid():
+                formset.save()
+                return HttpResponseRedirect(f"/{quest.name}/")
+        
+    return render(request, 'openQuest.html', {'quest_tasks': quest_tasks, 'quest_name': quest.name, 'taskForm':taskForm, 'formset': formset, 'completed_tasks': completed_tasks, 'total_tasks': total_tasks})

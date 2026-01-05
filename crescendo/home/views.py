@@ -52,6 +52,10 @@ def home(request):
     # How much XP they have gained SINCE the last level
     xp_progress = user_profile.xp - previous_level_threshold
     xp_to_gain = level_range - xp_progress
+
+    if user_profile.xp >= calculate_threshold(user_profile.level):
+        user_profile.level += 1
+        user_profile.save()
     # trophies ranges
     Quests = List.objects.filter(user=request.user, is_completed=False)
     completed_quests = List.objects.filter(user=request.user, is_completed=True)
@@ -111,9 +115,32 @@ def openQuest(request, quest_name):
     completed_tasks = quest_tasks.filter(is_completed=True).count()
     total_tasks = quest_tasks.count()
 
-    if completed_tasks == total_tasks:
+    if total_tasks <= 5:
+        xp_gain = 10
+        difficulty = 'Simple'
+    elif total_tasks <= 15:
+        xp_gain = 25
+        difficulty = 'Easy'
+    elif total_tasks <= 30:
+        xp_gain = 45
+        difficulty = 'Medium'
+    elif total_tasks <= 50:
+        xp_gain = 70
+        difficulty = 'Hard'
+    else:
+        xp_gain = 100
+        difficulty = 'Extreme'
+
+    if quest.difficulty != difficulty:
+        quest.difficulty = difficulty
+        quest.save()
+
+    if total_tasks > 0 and completed_tasks == total_tasks and not quest.is_completed:
         quest.is_completed = True
         quest.save()
+        profile = request.user.user_profile
+        profile.xp += xp_gain
+        profile.save()
     #forms
     taskForm = TaskForm()
     formset = checkboxformset(queryset=quest_tasks)
@@ -133,4 +160,4 @@ def openQuest(request, quest_name):
                 formset.save()
                 return HttpResponseRedirect(f"/{quest.name}/")
         
-    return render(request, 'openQuest.html', {'quest_tasks': quest_tasks, 'quest_name': quest.name, 'taskForm':taskForm, 'formset': formset, 'completed_tasks': completed_tasks, 'total_tasks': total_tasks})
+    return render(request, 'openQuest.html', {'quest_tasks': quest_tasks, 'quest_name': quest.name, 'taskForm':taskForm, 'formset': formset, 'completed_tasks': completed_tasks, 'total_tasks': total_tasks, 'difficulty': difficulty})

@@ -1,54 +1,72 @@
 {% extends "home.html" %}
 {% block title %}Crescendo - Quest{% endblock title %}
 {% block content %}
-<h1>{{ quest_name }}</h1>
-<progress value="{{ completed_tasks }}" max="{{ total_tasks }}"></progress>
+<div class="quest-detail-container">
+    <div class="quest-header-section">
+        <h1 class="quest-title">{{ quest_name }}</h1>
+        <div class="quest-meta">
+            <span class="difficulty-badge difficulty-{{ difficulty|lower }}">{{ difficulty }}</span>
+            <div class="progress-wrapper">
+                <progress class="task-progress-bar" value="{{ completed_tasks }}" max="{{ total_tasks }}"></progress>
+                <span class="progress-text">{{ completed_tasks }} / {{ total_tasks }} tasks completed</span>
+            </div>
+        </div>
+    </div>
 
-<form method="POST" id="checkpoints-form">
-    {% csrf_token %}
-    {{ formset.management_form }}
-
-    <h3>Pending Tasks</h3>
-    <ul class="checkpoints">
-        {% for form in formset %}
-            {% if not form.is_completed.value %}
-                <li>
-                    {{ form.id }} 
-                    {{ form.is_completed }} {{ form.instance.task }}
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-
-    <hr>
-
-    <h3>Completed Tasks</h3>
-    <ul class="checkpoints completed-list" style="opacity: 0.6;">
-        {% for form in formset %}
-            {% if form.is_completed.value %}
-                <li>
-                    {{ form.id }} 
-                    {{ form.is_completed }} <strike>{{ form.instance.task }}</strike>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-    
-    <input type="hidden" name="action" value="update_tasks">
-</form>
-
-<div class="add_task">
-    <form method="POST">
+    <form method="POST" id="checkpoints-form">
         {% csrf_token %}
-        {{ taskForm.as_p }}
-        <button type="submit" name="action" value="add_task">Add Task</button>
+        {{ formset.management_form }}
+
+        <div class="tasks-section">
+            <h3 class="section-heading">Pending Tasks</h3>
+            <ul class="checkpoints pending-tasks">
+                {% for form in formset %}
+                    {% if not form.is_completed.value %}
+                        <li class="task-item">
+                            {{ form.id }} 
+                            <label class="task-label">
+                                {{ form.is_completed }}
+                                <span class="task-text">{{ form.instance.task }}</span>
+                            </label>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+            <h3 class="section-heading">Completed Tasks</h3>
+            <ul class="checkpoints completed-tasks">
+                {% for form in formset %}
+                    {% if form.is_completed.value %}
+                        <li class="task-item completed">
+                            {{ form.id }} 
+                            <label class="task-label">
+                                {{ form.is_completed }}
+                                <span class="task-text"><strike>{{ form.instance.task }}</strike></span>
+                            </label>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <input type="hidden" name="action" value="update_tasks">
     </form>
+
+    <div class="add-task-section">
+        <h3 class="section-heading">Add New Task</h3>
+        <form method="POST" class="add-task-form">
+            {% csrf_token %}
+            {{ taskForm.as_p }}
+            <button type="submit" name="action" value="add_task" class="add-task-btn">Add Task</button>
+        </form>
+    </div>
+    <a href="/home/"><button class="go-back">go back</button></a>
+
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('checkpoints-form');
-    // Using a class selector is safer if you add more checkboxes later
     const checkboxes = form.querySelectorAll('.checkpoints input[type="checkbox"]');
     
     checkboxes.forEach(checkbox => {

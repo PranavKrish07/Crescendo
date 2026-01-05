@@ -751,6 +751,7 @@ a.switch:focus {
     margin: 0;
     display: flex;
     justify-content: space-between;
+    gap: 4rem;
 }
 
 .username {
@@ -762,7 +763,8 @@ a.switch:focus {
 
 .level-progress {
     height: 15px;
-    width: 100vh;
+    width: 100%;
+    max-width: 600px;
     border-radius: 12px;
 }
 
@@ -809,6 +811,8 @@ a.switch:focus {
 
 .quests-section {
     padding: 2rem;
+    flex: 1 1 55%;
+    min-width: 0;
 }
 
 .empty {
@@ -914,8 +918,19 @@ summary {
 
 .quests-body {
     display: flex;
-    justify-content: space-between;
+    gap: 8rem;
     padding: 1rem;
+    flex-wrap: wrap;
+}
+
+.quests-body > section {
+    flex: 1 1 30%;
+    min-width: 300px;
+    padding: 2rem;
+}
+
+.quests-body .stats-section {
+    padding-right: 1rem;
 }
 
 .stat-heading {
@@ -924,17 +939,20 @@ summary {
     margin-bottom: 1rem;
     font-weight: 700;
     text-align: center;
+    max-width: 450px;
+    margin-left: auto;
 }
 
 .stat-card {
     background: linear-gradient(135deg, rgba(0, 162, 143, 0.39) 0%, rgba(13, 148, 137, 0.216) 100%);
     box-shadow: 0 15px 50px var(--shadow-teal), inset 2px 3px 0 rgba(255, 255, 255, 0.575);
     border-radius: 1.5rem;
-    padding: 2.9vh 3.7vh;
+    padding: 1rem;
     height: auto;
-    width: 40vh;
+    width: 100%;
+    max-width: 450px;
     border: 4px outset rgba(19, 203, 188, 0.386);
-    margin-bottom: 1.5rem;
+    margin: 0 0 1.5rem auto;
 }
 .stat-card h2 {
     color: #006b5fcd;
@@ -952,8 +970,9 @@ summary {
 .stat-progress {
     display: flex;
     flex-direction: column;
-    height: 1.4vh;
-    width: 30vh;
+    height: 12px;
+    width: 100%;
+    max-width: 300px;
     border-radius: 12px;
 }
 
@@ -972,9 +991,10 @@ summary {
     background: linear-gradient(135deg, rgba(0, 209, 185, 0.581) 0%, rgba(13, 148, 137, 0.216) 100%);
     box-shadow: 0 15px 50px var(--shadow-teal), inset 2px 3px 0 rgba(255, 255, 255, 0.804);
     border-radius: 0.5rem;
-    padding: 2.9vh 3.7vh;
+    padding: 2rem 2.5rem;
     height: auto;
-    width: 100vh;
+    width: 100%;
+    max-width: 900px;
     border: 3px outset rgba(13, 148, 137, 0.2);
     margin-bottom: 1.5rem;
 }
@@ -1028,6 +1048,263 @@ summary {
     transform: translateY(-1px);
 }
 
+/* ========== OPEN QUEST PAGE ========== */
+.quest-detail-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    animation: slideUp 0.8s ease forwards;
+}
+
+.quest-header-section {
+    background: linear-gradient(135deg, rgba(0, 162, 143, 0.15) 0%, rgba(13, 148, 137, 0.08) 100%);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    border: 3px solid rgba(20, 184, 166, 0.2);
+    box-shadow: 0 8px 25px var(--shadow-teal);
+}
+
+.quest-title {
+    color: var(--primary-teal);
+    font-size: 36px;
+    font-weight: 800;
+    margin: 0 0 1.5rem 0;
+    text-align: center;
+}
+
+.quest-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.difficulty-badge {
+    display: inline-block;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.difficulty-easy {
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    color: white;
+}
+
+.difficulty-medium {
+    background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+    color: white;
+}
+
+.difficulty-hard {
+    background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+    color: white;
+}
+
+.progress-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.task-progress-bar {
+    width: 100%;
+    height: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.task-progress-bar::-webkit-progress-bar {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.task-progress-bar::-webkit-progress-value {
+    background: linear-gradient(90deg, var(--dark-teal) 0%, var(--primary-teal) 50%, #2DD4BF 100%);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(13, 148, 136, 0.4);
+    transition: var(--transition-smooth);
+}
+
+.task-progress-bar::-moz-progress-bar {
+    background: linear-gradient(90deg, var(--dark-teal) 0%, var(--primary-teal) 50%, #2DD4BF 100%);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(13, 148, 136, 0.4);
+}
+
+.progress-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal-text);
+}
+
+.tasks-section {
+    margin-bottom: 2rem;
+}
+
+.section-heading {
+    color: var(--primary-teal);
+    font-size: 24px;
+    font-weight: 700;
+    margin: 2rem 0 1rem 0;
+}
+
+.checkpoints {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.task-item {
+    background: white;
+    border: 2px solid var(--very-light-teal);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: var(--transition-smooth);
+}
+
+.task-item:hover {
+    transform: translateX(8px);
+    box-shadow: 0 6px 20px rgba(13, 148, 136, 0.15);
+    border-color: var(--primary-teal);
+}
+
+.task-item.completed {
+    opacity: 0.7;
+    background: linear-gradient(135deg, rgba(13, 148, 136, 0.05) 0%, rgba(20, 184, 166, 0.03) 100%);
+}
+
+.task-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--teal-text);
+}
+
+.task-label input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    accent-color: var(--primary-teal);
+    border-radius: 6px;
+    transition: var(--transition-smooth);
+}
+
+.task-label input[type="checkbox"]:checked {
+    transform: scale(1.1);
+}
+
+.task-text {
+    flex: 1;
+    line-height: 1.6;
+}
+
+.add-task-section {
+    background: linear-gradient(135deg, rgba(0, 162, 143, 0.1) 0%, rgba(13, 148, 137, 0.05) 100%);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    border: 2px solid rgba(20, 184, 166, 0.2);
+    box-shadow: 0 4px 15px var(--shadow-teal);
+}
+
+.add-task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.add-task-form p {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.add-task-form label {
+    font-weight: 600;
+    color: var(--teal-text);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.add-task-form input[type="text"],
+.add-task-form textarea {
+    padding: 12px 16px;
+    border: 2px solid var(--very-light-teal);
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: "Trirong", serif;
+    transition: var(--transition-smooth);
+    background-color: white;
+}
+
+.add-task-form input[type="text"]:focus,
+.add-task-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-teal);
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+    background-color: var(--light-teal);
+}
+
+.add-task-btn {
+    padding: 14px 28px;
+    background: linear-gradient(135deg, var(--dark-teal) 0%, var(--primary-teal) 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: 0 6px 18px rgba(13, 148, 136, 0.3);
+    font-family: "Trirong", serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.go-back {
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--dark-teal) 0%, var(--primary-teal) 100%);
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    color: aliceblue;
+    margin-top: 8vh;
+    font-size: 1.3rem;
+    font-weight: 600;
+
+}
+
+.add-task-btn:hover , .go-back:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(13, 148, 136, 0.4);
+    background: linear-gradient(135deg, var(--primary-teal) 0%, #2DD4BF 100%);
+}
+
+.add-task-btn:active, .go-back:active {
+    transform: translateY(-1px);
+}
+
+
+
 /* ========== RESPONSIVE DESIGN ========== */
 @media (max-width: 768px) {
     .quiz-cover-title {
@@ -1055,7 +1332,79 @@ summary {
         margin-top: 40px;
     }
 
-    
+    .quest-detail-container {
+        padding: 1.5rem;
+    }
+
+    .quest-title {
+        font-size: 28px;
+    }
+
+    .quest-header-section {
+        padding: 2rem;
+    }
+
+    .user-profile {
+        margin: 2rem 1.5rem;
+        padding: 2rem 2.5rem;
+        gap: 1.5rem;
+        height: auto;
+        min-height: 200px;
+    }
+
+    .profile-image {
+        height: 7rem;
+        width: 7rem;
+    }
+
+    .sub-class-display {
+        font-size: 20px;
+    }
+
+    .username {
+        font-size: 26px;
+    }
+
+    .name-and-level {
+        padding-left: 1.5rem;
+    }
+
+    .quests-count {
+        min-width: 220px;
+        padding: 1.5rem;
+        margin-right: 1rem;
+    }
+
+    .quests-count p {
+        font-size: 14px;
+    }
+
+    .quests-body {
+        gap: 1.5rem;
+        padding: 0.75rem;
+    }
+
+    .quests-section {
+        padding: 1.5rem;
+    }
+
+    .quest-card {
+        padding: 1.5rem 2rem;
+        max-width: 100%;
+    }
+
+    .stat-card {
+        padding: 1.5rem 2rem;
+        max-width: 320px;
+    }
+
+    .heading {
+        font-size: 24px;
+    }
+
+    .stat-heading {
+        font-size: 24px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -1080,6 +1429,122 @@ summary {
 
     .quiz-title {
         font-size: 22px;
+    }
+
+    .quest-title {
+        font-size: 24px;
+    }
+
+    .task-item {
+        padding: 0.8rem 1rem;
+    }
+
+    .task-item:hover {
+        transform: translateX(4px);
+    }
+
+    /* Home Page - Tablet Portrait & Mobile Landscape */
+    .user-profile {
+        flex-direction: column;
+        align-items: center;
+        margin: 1.5rem 1rem;
+        padding: 1.5rem;
+        height: auto;
+        text-align: center;
+    }
+
+    .profile-image {
+        height: 6rem;
+        width: 6rem;
+    }
+
+    .sub-class-display {
+        font-size: 18px;
+        margin-top: 0.5rem;
+    }
+
+    .name-and-level {
+        padding-left: 0;
+        width: 100%;
+        align-items: center;
+    }
+
+    .username {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .level-progress {
+        max-width: 100%;
+    }
+
+    .name-and-level div {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .quests-count {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        min-width: auto;
+    }
+
+    .quests-body {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+
+    .quests-section {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .quest-card {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .quest-card h2 {
+        font-size: 18px;
+    }
+
+    .stat-card {
+        max-width: 100%;
+        padding: 1.25rem 1.5rem;
+        margin: 0 auto 1.5rem auto;
+    }
+
+    .stat-progress {
+        max-width: 100%;
+    }
+
+    .heading {
+        font-size: 20px;
+    }
+
+    .stat-heading {
+        font-size: 22px;
+        margin: 0 auto 1rem auto;
+    }
+
+    .quests-body .stats-section {
+        padding: 1rem;
+    }
+
+    .add-quest-button {
+        padding: 5px 25px;
+        font-size: 18px;
+    }
+
+    .home-logo {
+        height: 2.5rem;
+    }
+
+    .logout-button-home {
+        padding: 6px 12px;
+        font-size: 13px;
     }
 }
 
@@ -1132,8 +1597,8 @@ summary {
     }
 
     .quests-body {
+        gap: 0.75rem;
         padding: 0.5rem;
-        gap: 0.5rem;
     }
 
     .quests-body h1 {
@@ -1148,6 +1613,133 @@ summary {
 
     .stat-card p {
         font-size: 14px;
+    }
+
+    .quest-detail-container {
+        padding: 1rem;
+        margin: 1rem auto;
+    }
+
+    .quest-header-section {
+        padding: 1.5rem;
+    }
+
+    .quest-title {
+        font-size: 22px;
+    }
+
+    .section-heading {
+        font-size: 20px;
+    }
+
+    .task-item {
+        padding: 0.75rem;
+    }
+
+    .task-label {
+        font-size: 14px;
+    }
+
+    .add-task-section {
+        padding: 1.5rem;
+    }
+
+    .add-task-btn {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    /* Home Page - Mobile Portrait */
+    .main-header {
+        height: auto;
+        padding: 0.5rem;
+    }
+
+    .user-profile {
+        margin: 1rem 0.5rem;
+        padding: 1.25rem;
+        border-radius: 1.5rem;
+    }
+
+    .profile-image {
+        height: 5rem;
+        width: 5rem;
+    }
+
+    .sub-class-display {
+        font-size: 16px;
+    }
+
+    .username {
+        font-size: 18px;
+    }
+
+    .name-and-level div p {
+        font-size: 13px;
+    }
+
+    .quests-count p {
+        font-size: 13px;
+    }
+
+    .quests-section {
+        padding: 0.75rem;
+    }
+
+    .quest-card {
+        padding: 1rem;
+        border-radius: 0.75rem;
+    }
+
+    .quest-card h2 {
+        font-size: 16px;
+    }
+
+    .stat-card {
+        padding: 1rem;
+    }
+
+    .stat-card h2 {
+        font-size: 16px;
+    }
+
+    .heading {
+        font-size: 18px;
+    }
+
+    .stat-heading {
+        font-size: 20px;
+    }
+
+    .add-quest-form {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .add-quest-form input {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .add-quest-form button {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .open-btn,
+    .delete-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .home-logo {
+        height: 2rem;
+    }
+
+    .logout-button-home {
+        padding: 6px 10px;
+        font-size: 12px;
     }
 }
 
@@ -1167,5 +1759,94 @@ summary {
     .option-label {
         padding: 12px 15px;
         font-size: 14px;
+    }
+
+    .quest-detail-container {
+        padding: 0.75rem;
+    }
+
+    .quest-title {
+        font-size: 20px;
+    }
+
+    .section-heading {
+        font-size: 18px;
+    }
+
+    .task-label input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Home Page - Small Mobile */
+    .user-profile {
+        margin: 0.75rem 0.5rem;
+        padding: 1rem;
+    }
+
+    .profile-image {
+        height: 4.5rem;
+        width: 4.5rem;
+    }
+
+    .sub-class-display {
+        font-size: 14px;
+    }
+
+    .username {
+        font-size: 16px;
+    }
+
+    .name-and-level div p {
+        font-size: 12px;
+    }
+
+    .quests-count {
+        padding: 1rem;
+    }
+
+    .quests-count p {
+        font-size: 12px;
+    }
+
+    .heading {
+        font-size: 16px;
+    }
+
+    .stat-heading {
+        font-size: 18px;
+    }
+
+    .quest-card h2,
+    .stat-card h2 {
+        font-size: 14px;
+    }
+
+    .empty {
+        font-size: 14px;
+        padding: 1rem;
+    }
+}
+
+/* ========== LANDSCAPE ORIENTATION SPECIFIC ========== */
+@media (max-width: 900px) and (orientation: landscape) {
+    .user-profile {
+        flex-direction: row;
+        padding: 1.5rem;
+        height: auto;
+        min-height: auto;
+    }
+
+    .profile-image {
+        height: 5rem;
+        width: 5rem;
+    }
+
+    .name-and-level {
+        padding-left: 1rem;
+    }
+
+    .quests-count {
+        margin-left: auto;
     }
 }

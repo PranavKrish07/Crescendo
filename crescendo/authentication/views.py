@@ -15,7 +15,7 @@ def signup_view(request):
         user = User.objects.create_user(username=name, email=email, password=password)
 
         login(request, user)
-        return HttpResponseRedirect("/quiz/")
+        return HttpResponseRedirect("/quiz/takequiz/")
     return render(request, "auth/signup.html")
 
 

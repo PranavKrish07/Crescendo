@@ -2,6 +2,7 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: "Trirong", serif;
+    overflow-x: hidden;
 }
 
 /* ========== COLOR & TRANSITION VARIABLES ========== */
@@ -386,17 +387,6 @@ a.switch:focus {
     }
 }
 
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -744,7 +734,7 @@ a.switch:focus {
     padding-left: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 0px;
+    gap: 0;
 }
 
 .name-and-level div {
@@ -958,8 +948,7 @@ summary {
     color: #006b5fcd;
     font-size: 20px;
     font-weight: 600;
-    margin-bottom: 1rem;
-    margin: 0;
+    margin: 0 0 1rem 0;
 }
 
 .stat-card p {
@@ -1003,8 +992,7 @@ summary {
     color: #006b5fcd;
     font-size: 20px;
     font-weight: 600;
-    margin-bottom: 1rem;
-    margin: 0;
+    margin: 0 0 1rem 0;
 }
 
 .quest-card div {
@@ -1451,15 +1439,22 @@ summary {
         padding: 1.5rem;
         height: auto;
         text-align: center;
+        gap: 1rem;
+    }
+
+    .user-profile > div:first-child {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .profile-image {
-        height: 6rem;
-        width: 6rem;
+        height: 9rem;
+        width: 9rem;
     }
 
     .sub-class-display {
-        font-size: 18px;
+        font-size: 16px;
         margin-top: 0.5rem;
     }
 
@@ -1467,28 +1462,42 @@ summary {
         padding-left: 0;
         width: 100%;
         align-items: center;
+        gap: 0.5rem;
     }
 
     .username {
-        font-size: 22px;
+        font-size: 20px;
         text-align: center;
     }
 
     .level-progress {
         max-width: 100%;
+        height: 10px;
     }
 
     .name-and-level div {
         flex-direction: column;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.25rem;
+    }
+
+    .name-and-level div p {
+        font-size: 13px;
+        margin: 0.2rem 0;
     }
 
     .quests-count {
         width: 100%;
-        max-width: 100%;
-        margin: 0;
+        max-width: 280px;
+        margin: 0 auto;
         min-width: auto;
+        padding: 1rem 1.5rem;
+        border-radius: 1.25rem;
+    }
+
+    .quests-count p {
+        font-size: 14px;
+        margin: 0.3rem 0;
     }
 
     .quests-body {
@@ -1599,6 +1608,15 @@ summary {
     .quests-body {
         gap: 0.75rem;
         padding: 0.5rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .quests-body > section {
+        min-width: 0;
+        width: 100%;
+        padding: 0.5rem;
+        box-sizing: border-box;
     }
 
     .quests-body h1 {
@@ -1659,6 +1677,9 @@ summary {
         margin: 1rem 0.5rem;
         padding: 1.25rem;
         border-radius: 1.5rem;
+        width: calc(100% - 1rem);
+        box-sizing: border-box;
+        flex-wrap: wrap;
     }
 
     .profile-image {
@@ -1684,11 +1705,16 @@ summary {
 
     .quests-section {
         padding: 0.75rem;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .quest-card {
         padding: 1rem;
         border-radius: 0.75rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .quest-card h2 {
@@ -1697,6 +1723,9 @@ summary {
 
     .stat-card {
         padding: 1rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .stat-card h2 {
@@ -1848,5 +1877,268 @@ summary {
 
     .quests-count {
         margin-left: auto;
+    }
+}
+
+/* ========== LANDING PAGE RESPONSIVE ========== */
+@media (max-width: 900px) {
+    .header-content {
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    .landing-header-buttons {
+        gap: 20px;
+    }
+
+    .landing-header-buttons ul {
+        gap: 20px;
+        font-size: 16px;
+    }
+
+    .landing-header-buttons button {
+        padding: 12px 20px;
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Header */
+    .logo {
+        width: 120px;
+        margin: 0;
+    }
+    
+    .landing-header-buttons ul {
+        display: none; /* Hide nav links on tablet/mobile for simplicity */
+    }
+
+    /* Opening Section */
+    .opening {
+        flex-direction: column-reverse;
+        height: auto;
+        padding: 40px 20px;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .opening-text h1 {
+        font-size: 36px;
+    }
+
+    .opening-text p {
+        font-size: 18px;
+    }
+    
+    .opening-text button {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        padding: 15px 30px;
+    }
+
+    .ui-image {
+        height: auto;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    /* What Do You Need Section */
+    .what-do-you-need {
+        height: auto;
+        margin: 40px 20px;
+        border-radius: 30px;
+        padding-bottom: 40px;
+    }
+
+    .what-do-you-need h2 {
+        font-size: 30px;
+    }
+
+    .buttons-div {
+        flex-direction: column;
+    }
+
+    .buttons {
+        width: 100%;
+        align-items: center;
+    }
+
+    .buttons button {
+        width: 90%;
+        max-width: 400px;
+        height: auto;
+        margin: 10px 0;
+        font-size: 16px;
+    }
+
+    /* Features Section */
+    .features {
+        flex-direction: column;
+        padding: 20px;
+        gap: 40px;
+    }
+
+    .feature {
+        padding: 0;
+    }
+    
+    .feature img {
+        height: 120px;
+    }
+
+    /* Footer */
+    .media {
+        flex-direction: column;
+        gap: 40px;
+        padding: 20px;
+    }
+
+    .newsletter input {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    .newsletter button {
+        width: 100%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .details {
+        justify-content: center;
+        gap: 40px;
+    }
+    
+    footer h3 {
+        text-align: center;
+    }
+    
+    footer div:last-child {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .opening-text h1 {
+        font-size: 28px;
+    }
+
+    .opening-text p {
+        font-size: 16px;
+    }
+
+    .what-do-you-need h2 {
+        font-size: 24px;
+        padding-top: 30px;
+    }
+
+    .how-it-works h2 {
+        font-size: 28px;
+    }
+    
+    .details {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .details ul {
+        padding: 0;
+    }
+}
+
+/* ========== AUTHENTICATION PAGES RESPONSIVE ========== */
+@media (max-width: 900px) {
+    .auth-form {
+        flex-direction: column-reverse;
+        margin: 20px;
+        max-width: 90%;
+    }
+
+    .auth-form img {
+        height: 40vh;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .auth-form div {
+        padding: 30px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .auth-form input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .auth-form button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 768px) {
+    .authentication-body {
+        padding: 20px;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .auth-form {
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .auth-form img {
+        height: 35vh;
+    }
+
+    .auth-form div h1 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .auth-form div p {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .authentication-body {
+        padding: 15px;
+    }
+
+    .auth-form {
+        max-width: 100%;
+        border-radius: 12px;
+    }
+
+    .auth-form img {
+        display: none;
+    }
+
+    .auth-form div {
+        padding: 25px 20px;
+    }
+
+    .auth-form div h1 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .auth-form input {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .auth-form button {
+        padding: 14px;
+        font-size: 16px;
     }
 }

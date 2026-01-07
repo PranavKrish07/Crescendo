@@ -169,6 +169,34 @@ html {
 
 .ui-image {
   height: 80vh;
+  position: relative;
+  z-index: 2;
+}
+
+.ui-image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ui-image-container::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(
+    circle,
+    rgba(20, 184, 166, 0.7) 0%,
+    rgba(13, 148, 136, 0.3) 50%,
+    transparent 70%
+  );
+  filter: blur(50px);
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* ========== WHAT DO YOU NEED SECTION ========== */
@@ -1037,6 +1065,17 @@ summary {
 .quest-card div {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.quest-date {
+  font-size: 12px;
+  color: #0d5d53;
+  opacity: 0.7;
+  margin: 0;
+  font-weight: 500;
+  white-space: nowrap;
+  text-align: right;
 }
 
 .delete-btn {

@@ -1,0 +1,50 @@
+{% extends "home.html" %}
+{% block title %}Crescendo - Roadmap{% endblock title %}
+{% block content %}
+<div class="quest-detail-container">
+    <div class="quest-header-section">
+        <h1 class="quest-title">🗺️ {{ quest.name }}</h1>
+        <div class="quest-meta">
+            <span class="difficulty-badge difficulty-{{ quest.difficulty|lower }}">{{ quest.difficulty }}</span>
+            <span class="roadmap-badge">{{ quest.category }} Roadmap</span>
+            <div class="reward-info">
+                <span>🏆 +{{ quest.trophy_reward }} {{ quest.category }} Trophies</span>
+                <span>⭐ +{{ quest.xp_reward }} XP</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="tasks-section">
+        <h3 class="section-heading">Roadmap Tasks</h3>
+        <ul class="checkpoints pending-tasks">
+            {% for task in tasks %}
+            <li class="task-item">
+                <label class="task-label">
+                    <span class="task-text">{{ task.task }}</span>
+                </label>
+            </li>
+            {% empty %}
+            <li class="task-item">
+                <span class="task-text">No tasks defined for this roadmap.</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if not progress.is_completed %}
+    <form method="POST" class="complete-roadmap-form">
+        {% csrf_token %}
+        <button type="submit" name="complete_roadmap" class="complete-btn" 
+                onclick="return confirm('Complete this roadmap and claim rewards?');">
+            ✅ Complete Roadmap & Claim Rewards
+        </button>
+    </form>
+    {% else %}
+    <div class="completed-notice">
+        <p>✅ Roadmap Completed!</p>
+    </div>
+    {% endif %}
+
+    <a href="/home/"><button class="go-back">Go Back</button></a>
+</div>
+{% endblock content %}

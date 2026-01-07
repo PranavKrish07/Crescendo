@@ -37,7 +37,40 @@ class List(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.user.username}"
+
+class StatQuest(models.Model):
+    STAT_CHOICES = [
+        ('STR', 'Strength'), ('PER', 'Perception'), ('WIL', 'Willpower'),
+        ('CHA', 'Charisma'), ('INT', 'Intelligence'), ('AGI', 'Agility'),
+        ('VIT', 'Vitality'), ('END', 'Endurance')
+    ]
+    name = models.CharField(max_length=100)
+    category = models.CharField(max_length=3, choices=STAT_CHOICES)
+    difficulty = models.CharField(max_length=20, default='Easy')
+    xp_reward = models.IntegerField()
+    trophy_reward = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.name} ({self.category})"
+
+class StatTask(models.Model):
+    quest = models.ForeignKey(StatQuest, on_delete=models.CASCADE)
+    task = models.CharField(max_length=50, default=None)
+
+    def __str__(self):
+        return self.task
+
+class UserQuestProgress(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quest = models.ForeignKey(StatQuest, on_delete=models.CASCADE)
+    is_completed = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('user', 'quest')
     
+    def __str__(self):
+        return f"{self.user.username} - {self.quest.name}"
+
 class Task(models.Model):
     list = models.ForeignKey(List, on_delete=models.CASCADE)
     task = models.CharField(max_length=255)

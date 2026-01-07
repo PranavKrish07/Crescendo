@@ -47,7 +47,9 @@
           <button type="submit">Add Quest</button>
         </form>
       </details>
+      {% endif %}
     </div>
+      {% if Quests.count != 0 or active_roadmaps %}
       {% for quest in Quests %}
       <div class="quest-card">
         <div>
@@ -60,10 +62,19 @@
         </form>
         </div>
         <button class="open-btn" onclick="window.location.href = '/{{ quest.name }}/'">open</button>
+        <p class="quest-date">{{ quest.created_at|date:"M d, Y" }}</p>
+      </div>
+      {% endfor %}
+      {% for roadmap in active_roadmaps %}
+      <div class="quest-card">
+        <div>
+          <h2>🗺️ {{ roadmap.quest.name }}</h2>
+          <span class="roadmap-badge">{{ roadmap.quest.category }} Roadmap</span>
+        </div>
+        <button class="open-btn" onclick="window.location.href='{% url 'open_roadmap' roadmap.id %}'">Open</button>
       </div>
       {% endfor %}
     {% else %}
-    </div>
       <div class="empty">
         <p>No active quests available. Click to add new quest</p>
         <details class="dropdown">
@@ -95,6 +106,18 @@
         <button class="open-btn" onclick="window.location.href = '/{{ quest.name }}/'">open</button>
       </div>
       {% endfor %}
+      <h1 class="stat-heading">Available Roadmaps</h1>
+<div class="roadmap-container">
+    {% for roadmap in available_roadmaps %}
+    <div class="stat-card">
+        <h2>{{ roadmap.name }}</h2>
+        <p>Reward: {{ roadmap.xp_reward }} XP | +{{ roadmap.trophy_reward }} {{ roadmap.category }}</p>
+        <button class="open-btn" onclick="window.location.href='{% url 'start_roadmap' roadmap.id %}'">
+            Start Roadmap
+        </button>
+    </div>
+    {% endfor %}
+</div>
   </section>
   <section class="stats-section">
     <h1 class="stat-heading">Stats</h1>

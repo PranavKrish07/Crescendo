@@ -1,106 +1,100 @@
-# ⚔️ Crescendo: Level up your life, one task at a time.
+# 🚀 Crescendo - Gamify you life, One task at a time
 
-## 🚀 Overview
+**Crescendo** is a gamified productivity platform built with Django that transforms real-life tasks into a structured RPG experience. Unlike standard to-do lists, Crescendo uses a custom leveling engine and stat-based roadmaps to drive personal growth through "S-Rank" performance.
 
-**Crescendo** is a gamified personal growth and productivity web application designed to help users build sustainable habits by transforming their tasks into measurable progress. It moves beyond simple to-do lists by introducing a sophisticated **dual progression system** tied to personal **Stats** and unique **Class** guidance.
+---
 
-This project was developed as a comprehensive portfolio piece demonstrating proficiency in full-stack web development using the Django framework and dynamic front-end updates via AJAX.
+## ✨ Key Features
 
-## ✨ Core Features
+### 🎮 RPG Growth System
 
-### 1\. Dual Progression System
+* **Global Leveling**: Advance through levels using a custom-built threshold algorithm: .
+* **Dynamic Ranking**: Progress from **Rank E** to **Rank S** across multiple mental and physical attributes based on your trophy count.
+* **User Classes**: Complete an initial quiz to be assigned a class (e.g., Knight, Ninja, Alchemist) that shapes your aesthetic and progression journey.
 
-Crescendo motivates users through two distinct progression tracks:
+### 🗺️ Predefined Stat Roadmaps (New in V1)
 
-  * **Profile Level (XP):** Rewards overall consistency and effort. Completing any task grants **XP**, helping the user level up their primary profile.
-  * **Stat Ranks (Trophies):** Rewards targeted skill development. Stats like **"Cognitive Endurance"** are leveled up (E ➡️ S Ranks) by collecting **Trophies** earned from completing linked, focused task lists.
+* **Guided Growth**: Beyond manual tasks, users can now accept predefined "Roadmaps" designed to boost specific stats like Intelligence (INT) or Strength (STR).
+* **Unique User Progression**: Built on a template-to-instance architecture. While roadmaps are shared, every user's progress, task completion, and timing are completely isolated and unique.
+* **Automated Rewards**: Completing roadmaps dynamically awards both XP and Stat Trophies using efficient backend reflection (`getattr`/`setattr`).
 
-### 2\. The Class System (Personalized Guidance)
+### 📝 Task Management
 
-Users are classified into one of three distinct productivity archetypes via a short quiz:
+* **Manual Quests**: Create custom "Lists" and "Tasks" for daily chores or projects.
+* **Dynamic Difficulty**: Quests are automatically assigned a difficulty level (Simple to Extreme) based on the number of sub-tasks involved, scaling XP rewards accordingly.
 
-  * **The Knight:** (The Executor) Focuses on discipline and routine.
-  * **The Ninja:** (The Sprinter) Focuses on speed and adaptation.
-  * **The Alchemist:** (The Strategist) Focuses on deep planning and synthesis.
+---
 
-The app provides class-specific tips and roadmap recommendations to help the user conquer their specific behavioral weaknesses.
+## 🛠️ Technical Stack
 
-### 3\. Stat Roadmaps
+* **Backend**: Django (Python 3.x)
+* **Database**: SQLite (Development)
+* **Frontend**: HTML5, CSS3 (Modern Glassmorphism & Responsive Design)
+* **Authentication**: Custom User model with class-based profile extensions.
 
-For every Stat, **Roadmaps** provide predefined, structured task lists (e.g., "Deep Work Introduction"). Users can add these Roadmaps to their dashboard, instantly linking the tasks to the relevant Stat and providing a clear path to ranking up.
+---
 
-### 4\. Dynamic Task Management
+## 🏗️ Database Architecture
 
-To-Do lists feature difficulty settings (Easy, Medium, Hard), directly correlating task complexity with the amount of XP and Trophies awarded upon completion.
+Crescendo V1 implements a robust relational structure to handle gamification at scale:
 
-## 💻 Technology Stack
+* **`StatQuest`**: The master template defining rewards and categories.
+* **`StatTask`**: Predefined steps associated with a roadmap template.
+* **`UserQuestProgress`**: The bridge model that tracks a specific user’s progress through a shared roadmap.
+* **`User_profile`**: Stores the central "Game State" for each user, including levels, XP, and trophies across 8 distinct attributes.
 
-| Category | Technology | Purpose in Crescendo |
-| :--- | :--- | :--- |
-| **Backend Framework** | **Django (Python)** | Handles all business logic, user authentication, data models (Stats, Ranks, Trophies), and API endpoints. |
-| **Database** | **SQLite** (Default for V1) | Stores user data, task history, stat progress, and class information. |
-| **Frontend Interaction** | **AJAX / Vanilla JS** | Used for dynamic form submissions and updating progress bars and score displays without requiring full page reloads. |
-| **Styling** | **HTML/CSS** | Clean, modern UI designed for clarity and focus. |
+---
 
-## ⚙️ Setup and Installation
+## 🚀 Getting Started
 
-### Prerequisites
+1. **Clone the repository**:
+```bash
+git clone [Your Repo URL]
 
-  * Python 3.x
-  * pip
+```
 
-### Steps
 
-1.  **Clone the Repository:**
+2. **Install dependencies**:
+```bash
+pip install -r requirements.txt
 
-    ```bash
-    git clone [Your Repository Link Here]
-    cd crescendo
-    ```
+```
 
-2.  **Create and Activate Virtual Environment:**
 
-    ```bash
-    python -m venv venv
-    # For Windows:
-    .\venv\Scripts\activate
-    # For Linux/macOS:
-    source venv/bin/activate
-    ```
+3. **Run Migrations**:
+```bash
+python manage.py makemigrations
+python manage.py migrate
 
-3.  **Install Dependencies:**
+```
 
-    ```bash
-    pip install -r requirements.txt
-    ```
 
-4.  **Run Migrations:**
+4. **Create a Superuser** (to add StatQuests via Admin):
+```bash
+python manage.py createsuperuser
 
-    ```bash
-    python manage.py makemigrations
-    python manage.py migrate
-    ```
+```
 
-5.  **Create a Superuser (Optional, for admin access):**
 
-    ```bash
-    python manage.py createsuperuser
-    ```
+5. **Launch the engine**:
+```bash
+python manage.py runserver
 
-6.  **Run the Development Server:**
+```
 
-    ```bash
-    python manage.py runserver
-    ```
 
-    Access the app in your browser at `http://127.0.0.1:8000/`.
 
-## 🧪 Future Scope (V2 Ideas)
+---
 
-  * **AI Task Generation:** Integrate a large language model API to generate detailed subtasks based on a high-level list title.
-  * **Streaks & Calendar Integration:** Utilize Google Calendar APIs to track and reward completion streaks for consistent habits.
-  * **Class-Specific Rewards:** Introduce unique abilities or UI themes unlocked only by achieving higher Ranks within a user's primary class.
+## 📅 Roadmap to S-Rank
 
-## 🤝 Contribution
+* [x] Custom Leveling and XP Logic
+* [x] Responsive User Dashboard & Profile Cards
+* [x] Predefined Stat-Roadmap Engine
+* [ ] Individual StatTask tracking for unique roadmap progression.
+* [ ] Advanced CSS Refactoring & UI modularity.
+* [ ] Multiplayer Leaderboards & Social "Guilds."
 
-This project is a personal portfolio piece, but feedback is welcome\! If you have suggestions, please open an issue.
+---
+
+**Developed by Pranav Krishna** *Aspiring Founder & Computer Science Student*

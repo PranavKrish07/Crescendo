@@ -178,7 +178,7 @@ def delete_quest(request, quest_id):
 @login_required
 def openQuest(request, quest_name):
     # NOTE: This view currently only handles Manual Lists.
-    # We will need a separate view (e.g., openStatQuest) for the roadmaps later.
+    # We will need a separate view (may be like openStatQuest) for the roadmaps later.
     quest = List.objects.filter(name=quest_name, user=request.user).first()
     if not quest:
         raise Http404("Quest not found")
@@ -219,6 +219,7 @@ def openQuest(request, quest_name):
 
     # Forms Handling
     taskForm = TaskForm()
+    # for the checkboxes to display all at once.
     formset = checkboxformset(queryset=quest_tasks)
     
     if request.method == 'POST':

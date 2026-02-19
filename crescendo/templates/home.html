@@ -92,6 +92,7 @@
       </div>
     {% endif %}
     <h1 class="heading">Completed Quests</h1>
+    {% if completed_quests.count > 0 %}
     {% for quest in completed_quests %}
       <div class="quest-card">
         <div>
@@ -106,18 +107,31 @@
         <button class="open-btn" onclick="window.location.href = '/{{ quest.name }}/'">open</button>
       </div>
       {% endfor %}
+    {% else %}
+      <div class="empty-completed">
+        <p>No completed quests yet. Complete some quests to see them here!</p>
+      </div>
+    {% endif %}
       <h1 class="stat-heading">Available Roadmaps</h1>
-<div class="roadmap-container">
-    {% for roadmap in available_roadmaps %}
-    <div class="stat-card">
-        <h2>{{ roadmap.name }}</h2>
-        <p>Reward: {{ roadmap.xp_reward }} XP | +{{ roadmap.trophy_reward }} {{ roadmap.category }}</p>
-        <button class="open-btn" onclick="window.location.href='{% url 'start_roadmap' roadmap.id %}'">
-            Start Roadmap
-        </button>
+    {% if available_roadmaps %}
+    <div class="roadmap-container">
+        {% for roadmap in available_roadmaps %}
+        <div class="roadmap-card">
+            <div>
+                <h2>{{ roadmap.name }}</h2>
+                <p>Reward: {{ roadmap.xp_reward }} XP | +{{ roadmap.trophy_reward }} {{ roadmap.category }}</p>
+            </div>
+            <button class="open-btn" onclick="window.location.href='{% url 'start_roadmap' roadmap.id %}'">
+                Start Roadmap
+            </button>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
+    {% else %}
+    <div class="empty-completed">
+        <p>No roadmaps available at the moment.</p>
+    </div>
+    {% endif %}
   </section>
   <section class="stats-section">
     <h1 class="stat-heading">Stats</h1>

@@ -1,6 +1,7 @@
-# 🚀 Crescendo - Gamify your life, One task at a time
+# 🚀 Crescendo
+livelink: https://crescendo-avdj.onrender.com/
 
-**Crescendo** is a gamified productivity platform built with Django that transforms real-life tasks into a structured RPG experience. Unlike standard to-do lists, Crescendo uses a custom leveling engine and stat-based roadmaps to drive personal growth through "S-Rank" performance.
+**Transform your daily grind into an S-Rank adventure.** Crescendo is a gamified productivity platform built with Django that turns real-world tasks into a structured RPG experience, using custom leveling algorithms and stat-based progression.
 
 ---
 
@@ -8,45 +9,43 @@
 
 ### 🎮 RPG Growth System
 
+* **Dynamic Class Assignment**: Complete an initial quiz to be assigned a unique class (Knight, Ninja, or Alchemist) that shapes your aesthetic journey.
 * **Global Leveling**: Advance through levels using a custom-built threshold algorithm.
-* **Dynamic Ranking**: Progress from **Rank E** to **Rank S** across multiple mental and physical attributes based on your trophy count.
-* **User Classes**: Complete an initial quiz to be assigned a class (e.g., Knight, Ninja, Alchemist) that shapes your aesthetic and progression journey.
+* **Attribute Ranking**: Progress from **Rank E** to **Rank S** across mental and physical attributes based on trophy counts.
 
-### 🗺️ Predefined Stat Roadmaps
+### 🗺️ Stat-Driven Roadmaps
 
-* **Guided Growth**: Users can accept predefined "Roadmaps" designed to boost specific stats like Intelligence (INT) or Strength (STR).
-* **Unique User Progression**: Built on a template-to-instance architecture. While roadmaps are shared, every user's progress, task completion, and timing are completely isolated.
-* **Automated Rewards**: Completing roadmaps dynamically awards both XP and Stat Trophies using backend reflection.
+* **Guided Growth**: Accept predefined "Roadmaps" designed to boost specific stats like Intelligence (INT) or Strength (STR).
+* **Template-to-Instance Architecture**: Roadmaps are shared templates, but every user's progress and task timing remain completely isolated.
+* **Automated Rewards**: XP and Stat Trophies are dynamically awarded upon completion using backend reflection.
 
 ---
 
 ## 🛠️ Technical Stack
 
-* **Backend**: Django 5.x (Python)
-* **Security**: `python-dotenv` for environment variable management.
-* **Static Files**: `WhiteNoise` for high-performance serving of Glassmorphism CSS in production.
+* **Core**: Python 3.13+, Django 5.2.
 * **Database**: SQLite (Development).
-* **Frontend**: HTML5, CSS3 (Modern Glassmorphism & Responsive Design).
+* **Production Serving**: WhiteNoise for high-performance static file delivery and Gunicorn as the WSGI server.
+* **Frontend**: Modern Glassmorphism CSS with responsive HTML5.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Installation & Setup
 
-### 1. Clone and Setup
+### 1. Clone the Repository
 
 ```bash
-git clone [Your Repo URL]
+git clone https://github.com/pranavkrish07/crescendo.git
 cd crescendo
-pip install -r requirements.txt
 
 ```
 
-### 2. Environment Variables
+### 2. Environment Configuration
 
-Create a `.env` file in the root directory and add your secrets:
+Create a `.env` file in the root directory:
 
 ```text
-SECRET_KEY=your-secret-key-here
+SECRET_KEY=your_secret_key
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
 
@@ -54,22 +53,16 @@ ALLOWED_HOSTS=localhost,127.0.0.1
 
 ### 3. Initialize the Engine
 
+The project includes a `build.sh` script for automated deployment, but for local setup, run:
+
 ```bash
-python manage.py makemigrations
+pip install -r requirements.txt
 python manage.py migrate
 python manage.py collectstatic
-
-```
-
-### 4. Create an Admin & Launch
-
-```bash
 python manage.py createsuperuser
 python manage.py runserver
 
 ```
-
-*Login to `/admin` to populate your `StatQuests` and `StatTasks` templates.*
 
 ---
 
@@ -78,9 +71,13 @@ python manage.py runserver
 * [x] Custom Leveling and XP Logic.
 * [x] Production-ready Security & Static File Handling.
 * [x] Responsive User Dashboard & Profile Cards.
-* [ ] Individual StatTask tracking for unique roadmap progression.
-* [ ] Multiplayer Leaderboards & Social "Guilds".
+* [ ] **Next Up**: Individual StatTask tracking for unique roadmap progression.
+* [ ] **Future**: Multiplayer Leaderboards & Social "Guilds".
 
+##Screenshots 
 ---
 
-**Developed by Pranav Krishna** *Aspiring Founder & Computer Science Student*
+
+## 👤 Author
+
+**Pranav Krishna** *Aspiring Founder & Computer Science Student*.

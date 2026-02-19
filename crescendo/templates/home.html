@@ -115,21 +115,22 @@
       <h1 class="stat-heading">Available Roadmaps</h1>
     {% if available_roadmaps %}
     <div class="roadmap-container">
-        {% for roadmap in available_roadmaps %}
-        <div class="roadmap-card">
-            <div>
-                <h2>{{ roadmap.name }}</h2>
-                <p>Reward: {{ roadmap.xp_reward }} XP | +{{ roadmap.trophy_reward }} {{ roadmap.category }}</p>
-            </div>
-            <button class="open-btn" onclick="window.location.href='{% url 'start_roadmap' roadmap.id %}'">
-                Start Roadmap
-            </button>
+      {% for roadmap in available_roadmaps %}
+      <div class="quest-card">
+        <div>
+          <h2>🗺️ {{ roadmap.name }}</h2>
+          <span class="roadmap-badge">{{ roadmap.category }} Roadmap</span>
         </div>
-        {% endfor %}
+        <p>Reward: {{ roadmap.xp_reward }} XP | +{{ roadmap.trophy_reward }} {{ roadmap.category }}</p>
+        <button class="open-btn" onclick="window.location.href='{% url 'start_roadmap' roadmap.id %}'">
+          Start Roadmap
+        </button>
+      </div>
+      {% endfor %}
     </div>
     {% else %}
     <div class="empty-completed">
-        <p>No roadmaps available at the moment.</p>
+      <p>No roadmaps available at the moment.</p>
     </div>
     {% endif %}
   </section>

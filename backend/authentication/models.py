@@ -17,6 +17,7 @@ class UserManager(BaseUserManager):
         user = self.create_user(email, name, password)
         user.is_staff = True
         user.is_superuser = True
+        user.is_active = True
         user.save(using=self._db)
         return user
 
@@ -26,6 +27,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active   = models.BooleanField(default=False)  # false until OTP verified
     is_staff    = models.BooleanField(default=False)
     created_at  = models.DateTimeField(auto_now_add=True)
+
+    # Awakening results
+    char_class      = models.CharField(max_length=20, blank=True, null=True)
+    archetype       = models.CharField(max_length=20, blank=True, null=True)
+    awakening_done  = models.BooleanField(default=False)
+
+    # Six stats — stored as FloatField for trophy fractions later
+    stat_str = models.FloatField(default=0)
+    stat_end = models.FloatField(default=0)
+    stat_agi = models.FloatField(default=0)
+    stat_int = models.FloatField(default=0)
+    stat_cha = models.FloatField(default=0)
+    stat_wil = models.FloatField(default=0)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']

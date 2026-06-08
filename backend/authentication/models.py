@@ -24,13 +24,13 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email       = models.EmailField(unique=True)
     name        = models.CharField(max_length=100)
-    is_active   = models.BooleanField(default=False)  # false until OTP verified
-    is_staff    = models.BooleanField(default=False)
-    created_at  = models.DateTimeField(auto_now_add=True)
+    is_active   = models.BooleanField(default=False)  #this will be false until we verify the email
+    is_staff    = models.BooleanField(default=False) #this will never change to make sure no one can log in to admin panel
+    created_at  = models.DateTimeField(auto_now_add=True) 
 
     # Awakening results
     char_class      = models.CharField(max_length=20, blank=True, null=True)
-    archetype       = models.CharField(max_length=20, blank=True, null=True)
+    archetype       = models.CharField(max_length=20, blank=True, null=True) 
     awakening_done  = models.BooleanField(default=False)
 
     # Six stats — stored as FloatField for trophy fractions later
@@ -40,6 +40,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     stat_int = models.FloatField(default=0)
     stat_cha = models.FloatField(default=0)
     stat_wil = models.FloatField(default=0)
+
+    #level and rank
+    level = models.IntegerField(default=1)
+    rank  = models.CharField(max_length=1, default='E')  #E, D, C, B, A, S
+    exp = models.IntegerField(default=0)
+    aura = models.IntegerField(default=0)
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']

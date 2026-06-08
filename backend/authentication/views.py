@@ -28,19 +28,16 @@ class SignupView(APIView):
             otp_code = generate_otp()
             OTP.objects.create(user=user, code=otp_code, purpose='verify')
             
-            # --- PATCH: Wrap email in a try-except block ---
             try:
                 send_mail(
                     'Verify your Crescendo account',
                     f'Your OTP is: {otp_code}\nIt expires in 10 minutes.',
                     settings.EMAIL_HOST_USER,
                     [user.email],
-                    fail_silently=False, # Force it to show you the error in terminal logs
+                    fail_silently=False,
                 )
             except Exception as e:
-                # Log the error to your terminal so you can see why SMTP is failing
                 print(f"SMTP Mail Delivery Error: {str(e)}")
-                # We return a 201 anyway, or pass a warning, so the frontend still moves to OTP screen
                 return Response({
                     'message': 'User registered, but failed to send verification email.',
                     'debug_error': str(e)
@@ -132,9 +129,7 @@ class ResetPasswordView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# =============================================================
 #  AWAKENING ENDPOINTS
-# =============================================================
 
 class GetScenesView(APIView):
     """GET /api/auth/awakening/scenes/ — serve scenes without stat scores."""
@@ -171,12 +166,11 @@ def assign_class(scores):
                 continue
             return c
 
-    # Primary-only match fallback
     for c in CLASSES:
         if c["primary"] == primary:
             return c
 
-    return CLASSES[0]  # last-resort fallback
+    return CLASSES[0]
 
 
 class SubmitAwakeningView(APIView):

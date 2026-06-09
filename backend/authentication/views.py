@@ -209,6 +209,8 @@ class SubmitAwakeningView(APIView):
         user.stat_wil = scores["WIL"]
         user.save()
 
+        
+
         return Response({
             "class":     assigned["name"],
             "archetype": assigned["archetype"],

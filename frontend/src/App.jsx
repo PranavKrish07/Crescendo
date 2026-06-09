@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import Landing from "./pages/Landing";
 import Signup from "./pages/Signup";
@@ -9,20 +9,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Awakening from "./pages/Awakening";
 import MyClass from "./pages/MyClass";
+import Dashboard from "./pages/Dashboard";
 
-function Home() {
-  const { user, logout } = useAuth();
-  return (
-    <div className="home-container">
-      <div className="home-card">
-        <h1>🎵 Crescendo</h1>
-        <p>Welcome{user?.name ? `, ${user.name}` : ""}!</p>
-        <p className="home-subtitle">You are logged in.</p>
-        <button onClick={logout}>Log Out</button>
-      </div>
-    </div>
-  );
-}
 
 function PrivateRoute({ children }) {
   const { tokens, user, loading } = useAuth();
@@ -79,7 +67,7 @@ export default function App() {
             path="/dashboard"
             element={
               <PrivateRoute>
-                <Home />
+              <Dashboard />
               </PrivateRoute>
             }
           />

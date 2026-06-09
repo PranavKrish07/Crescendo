@@ -33,19 +33,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     archetype       = models.CharField(max_length=20, blank=True, null=True) 
     awakening_done  = models.BooleanField(default=False)
 
-    # Six stats — stored as FloatField for trophy fractions later
-    stat_str = models.FloatField(default=0)
-    stat_end = models.FloatField(default=0)
-    stat_agi = models.FloatField(default=0)
-    stat_int = models.FloatField(default=0)
-    stat_cha = models.FloatField(default=0)
-    stat_wil = models.FloatField(default=0)
-
-    #level and rank
-    level = models.IntegerField(default=1)
-    rank  = models.CharField(max_length=1, default='E')  #E, D, C, B, A, S
-    exp = models.IntegerField(default=0)
-    aura = models.IntegerField(default=0)
+    # Six stats — for class awakening
+    stat_str = models.IntegerField(default=0)
+    stat_end = models.IntegerField(default=0)
+    stat_agi = models.IntegerField(default=0)
+    stat_int = models.IntegerField(default=0)
+    stat_cha = models.IntegerField(default=0)
+    stat_wil = models.IntegerField(default=0)
 
 
     USERNAME_FIELD = 'email'

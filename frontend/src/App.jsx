@@ -10,6 +10,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Awakening from "./pages/Awakening";
 import MyClass from "./pages/MyClass";
 import Dashboard from "./pages/Dashboard";
+import Roadmaps from "./pages/Roadmaps";
 
 
 function PrivateRoute({ children }) {
@@ -68,6 +69,14 @@ export default function App() {
             element={
               <PrivateRoute>
               <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/roadmaps"
+            element={
+              <PrivateRoute>
+              <Roadmaps />
               </PrivateRoute>
             }
           />

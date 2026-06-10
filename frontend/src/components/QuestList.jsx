@@ -166,7 +166,7 @@ Return ONLY a valid JSON array of strings representing the task descriptions, wi
                 <h4 className="quest-title">{quest.title} {quest.is_daily && <span className="quest-daily-badge">DAILY</span>}</h4>
                 <p className="quest-meta">
                   Difficulty: <span className={`quest-diff-${quest.difficulty.toLowerCase()}`}>{quest.difficulty}</span> | 
-                  Deadline: {new Date(quest.deadline).toLocaleString()}
+                  Deadline: {new Date(quest.deadline).toLocaleDateString()}
                   {quest.stat && ` | Tagged: ${quest.stat}`}
                 </p>
               </div>

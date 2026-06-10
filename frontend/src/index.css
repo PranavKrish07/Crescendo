@@ -2274,6 +2274,124 @@ a:hover {
   margin-bottom: 1rem;
 }
 
+.roadmap-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.roadmap-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-light);
+  box-shadow: var(--glow-md);
+}
+
+.roadmap-card .roadmap-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  border: 1px solid var(--primary-light);
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.roadmap-card .roadmap-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: none;
+  pointer-events: none;
+}
+
+.roadmap-card .roadmap-btn:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 4px 20px rgba(13, 148, 136, 0.4);
+}
+
+.roadmap-card .roadmap-btn:hover::after {
+  animation: btnShine 0.6s ease forwards;
+}
+
+/* ── Roadmaps Back Button ── */
+.roadmap-back-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.roadmap-back-btn:hover {
+  color: var(--primary-light);
+  border-color: var(--primary);
+  background: rgba(13, 148, 136, 0.05);
+  transform: translateX(-4px);
+  box-shadow: var(--glow-xs);
+}
+
+.roadmap-back-btn::before {
+  content: '←';
+  font-size: 1.1rem;
+  transition: transform 0.25s ease;
+}
+
+.roadmap-back-btn:hover::before {
+  transform: translateX(-4px);
+}
+
+/* ── Break Oath Button ── */
+.break-oath-btn {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: var(--error);
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.1);
+}
+
+.break-oath-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--error);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.break-oath-btn:active {
+  transform: translateY(0);
+}
+
 /* ── Rank Card ── */
 
 .dashboard-rank-card {
@@ -2952,19 +3070,19 @@ input[type="checkbox"].custom-checkbox:disabled {
 
 /* Modal form custom teal inputs */
 .quest-form select,
-.quest-form input[type="datetime-local"] {
+.quest-form input[type="date"] {
   accent-color: var(--primary);
   border-color: var(--border);
   color: var(--primary-light);
 }
 
 .quest-form select:focus,
-.quest-form input[type="datetime-local"]:focus {
+.quest-form input[type="date"]:focus {
   border-color: var(--primary-light);
   box-shadow: var(--glow-xs);
 }
 
-.quest-form input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+.quest-form input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   filter: invert(0.6) sepia(1) saturate(3) hue-rotate(135deg);
 }

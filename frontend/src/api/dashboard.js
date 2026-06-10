@@ -61,4 +61,44 @@ export const deleteQuest = async (id) => {
   return res.data;
 };
 
+export const checkInUser = async () => {
+  const res = await dashboardAPI.post(`/checkin/`);
+  return res.data;
+};
+
+export const fetchActiveRitual = async () => {
+  const res = await dashboardAPI.get(`/rituals/active/`);
+  return res.data;
+};
+
+export const applyForRitual = async () => {
+  const res = await dashboardAPI.post(`/rituals/apply/`);
+  return res.data;
+};
+
+export const fetchRoadmapTemplates = async () => {
+  const res = await dashboardAPI.get("/roadmaps/templates/");
+  return res.data;
+};
+
+export const fetchActiveRoadmaps = async () => {
+  const res = await dashboardAPI.get("/roadmaps/user/active/");
+  return res.data;
+};
+
+export const registerRoadmap = async (template_id, deadline) => {
+  const res = await dashboardAPI.post("/roadmaps/user/register/", { template_id, deadline });
+  return res.data;
+};
+
+export const toggleRoadmapTask = async (id, task_index) => {
+  const res = await dashboardAPI.post(`/roadmaps/user/${id}/toggle_task/`, { task_index });
+  return res.data;
+};
+
+export const breakOathRoadmap = async (id) => {
+  const res = await dashboardAPI.post(`/roadmaps/user/${id}/break_oath/`);
+  return res.data;
+};
+
 export default dashboardAPI;

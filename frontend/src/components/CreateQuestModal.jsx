@@ -164,7 +164,7 @@ Return ONLY a valid JSON array of strings representing the task descriptions, wi
           <div className="form-row">
             <div className="form-group flex-1">
               <label>Deadline*</label>
-              <input type="datetime-local" value={deadline} onChange={e => setDeadline(e.target.value)} required />
+              <input type="date" min={new Date().toISOString().split('T')[0]} value={deadline} onChange={e => setDeadline(e.target.value)} required />
             </div>
             <div className="form-group flex-1">
               <label>Tag Stat (Optional)</label>

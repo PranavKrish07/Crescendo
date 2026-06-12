@@ -30,11 +30,7 @@ AUTH_USER_MODEL = 'authentication.User'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'https://crescendo-xmd9.onrender.com/',
-]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

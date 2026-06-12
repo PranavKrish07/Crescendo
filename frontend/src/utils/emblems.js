@@ -1,6 +1,6 @@
 import imgAlchemist from "../images/class-emblems/Alchemist.png";
 import imgBerserker from "../images/class-emblems/Beserker.png";
-import imgKnight from "../images/class-emblems/knight.png";
+import imgKnight from "../images/class-emblems/Knight.png";
 import imgMystic from "../images/class-emblems/Mystic.png";
 import imgNinja from "../images/class-emblems/Ninja.png";
 import imgOracle from "../images/class-emblems/Oracle.png";

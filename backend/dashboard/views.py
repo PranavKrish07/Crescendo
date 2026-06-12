@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import UserProfile, Quest, SubTask, UserRitual, RoadmapTemplate, UserRoadmap
 from .serializers import QuestSerializer
 from .services import evaluate_expired_quests, process_quest_completion, evaluate_expired_roadmaps, get_roadmap_aura_reward
+from . import class_modifiers
 
 class ProfileView(APIView):
     """GET /api/dashboard/profile/ — return combined User + UserProfile data."""
@@ -70,12 +71,19 @@ class CheckInView(APIView):
     def post(self, request):
         profile = request.user.profile
         profile.check_in()
-        return Response({
+
+        # Apply class check-in effects (e.g., Sage: 15% chance to restore 50 Aura)
+        checkin_effects = class_modifiers.on_checkin_effects(request.user, profile)
+
+        response_data = {
             'status': 'Checked in successfully.',
             'streak': profile.streak,
             'streak_freezes': profile.streak_freezes,
             'last_checkin': profile.last_checkin
-        })
+        }
+        if checkin_effects:
+            response_data['class_effects'] = checkin_effects
+        return Response(response_data)
 
 class QuestViewSet(viewsets.ModelViewSet):
     serializer_class = QuestSerializer
@@ -113,6 +121,12 @@ class QuestViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def complete(self, request, pk=None):
         quest = self.get_object()
+
+        # Alchemist class gate: cannot complete unless all subtasks done
+        allowed, error_msg = class_modifiers.can_complete_quest(request.user, quest)
+        if not allowed:
+            return Response({'error': error_msg}, status=status.HTTP_400_BAD_REQUEST)
+
         process_quest_completion(quest)
         return Response({'status': 'Quest completed, rewards granted.'})
         
@@ -190,12 +204,20 @@ class RitualViewSet(viewsets.ViewSet):
         if profile.ritual_lockout_until and profile.ritual_lockout_until > timezone.now():
             return Response({'error': 'You are currently locked out of rituals.'}, status=400)
 
-        # Days required mapping
+        # Days required mapping + class modifier (Knight: +2 days)
         days_required = {'E': 7, 'D': 10, 'C': 14, 'B': 21, 'A': 30}
         req_days = days_required.get(profile.rank, 7)
+        req_days += class_modifiers.get_ritual_extra_days(request.user)
+
+        # Aura cap check with class modifier (Phantom: +15% cap requirement)
+        aura_cap_mult = class_modifiers.get_ritual_aura_cap_multiplier(request.user)
+        effective_cap = int(profile.get_aura_cap() * aura_cap_mult)
 
         if profile.days_at_aura_cap < req_days:
             return Response({'error': f'You must hold your Aura cap for {req_days} days to apply.'}, status=400)
+
+        if profile.aura < effective_cap:
+            return Response({'error': f'Your Aura must reach {effective_cap} to attempt a ritual.'}, status=400)
 
         if UserRitual.objects.filter(user=request.user, status='ACTIVE').exists():
             return Response({'error': 'You already have an active ritual.'}, status=400)
@@ -277,7 +299,7 @@ class UserRoadmapViewSet(viewsets.ViewSet):
         if UserRoadmap.objects.filter(user=request.user, template=template, status='PENDING').exists():
             return Response({'error': 'You already have this roadmap active'}, status=400)
             
-        # Rank-based capacity limits
+        # Rank-based capacity limits + class modifier (Ronin: -1 slot)
         active_count = UserRoadmap.objects.filter(user=request.user, status='PENDING').count()
         rank = request.user.profile.rank
         
@@ -286,6 +308,9 @@ class UserRoadmapViewSet(viewsets.ViewSet):
             limit = 4
         elif rank == 'S':
             limit = 9999  # unlimited
+        
+        limit += class_modifiers.get_roadmap_slot_modifier(request.user)
+        limit = max(1, limit)  # Ensure at least 1 slot
             
         if active_count >= limit:
             return Response({'error': f'Your Rank ({rank}) only allows {limit} active roadmaps at a time.'}, status=400)
@@ -320,19 +345,26 @@ class UserRoadmapViewSet(viewsets.ViewSet):
             r.status = 'COMPLETED'
             r.completed_at = timezone.now()
             
-            # Award Growth Points based on difficulty
-            reward = 2 if r.template.difficulty == 'EASY' else (4 if r.template.difficulty == 'MEDIUM' else 6)
+            # Award Growth Points with class GP multipliers
+            base_reward = 2 if r.template.difficulty == 'EASY' else (4 if r.template.difficulty == 'MEDIUM' else 6)
             profile = request.user.profile
+            gp_multipliers = class_modifiers.get_roadmap_gp_multipliers(
+                request.user, profile, r
+            )
+            stat_key = r.template.stat.upper()
             stat_field = f"{r.template.stat.lower()}_points"
             current_val = getattr(profile, stat_field, 0)
-            setattr(profile, stat_field, current_val + reward)
+            multiplied_reward = base_reward * gp_multipliers.get(stat_key, 1.0)
+            setattr(profile, stat_field, current_val + multiplied_reward)
             
             # Award Aura based on rank and difficulty
             aura_reward = get_roadmap_aura_reward(profile.rank, r.template.difficulty)
             profile.add_aura(aura_reward)
             
-            # Award +10 XP for completing a roadmap
-            profile.add_exp(10)
+            # Award XP with class roadmap XP multiplier
+            base_xp = 10
+            xp_mult = class_modifiers.get_roadmap_xp_multiplier(request.user, profile)
+            profile.add_exp(int(base_xp * xp_mult))
             
             profile.save()
             
@@ -346,15 +378,27 @@ class UserRoadmapViewSet(viewsets.ViewSet):
             if r.status != 'PENDING':
                 return Response({'error': 'Only active roadmaps can be broken'}, status=400)
                 
-            from .services import get_roadmap_aura_reward
-            penalty = get_roadmap_aura_reward(request.user.profile.rank, r.template.difficulty)
-            
             profile = request.user.profile
+
+            # Ninja Buff 2 (Agile Pivot): 1 free roadmap abandon per month
+            if class_modifiers.use_free_roadmap_abandon(request.user, profile):
+                r.delete()
+                return Response({'status': 'Oath broken. Ninja Agile Pivot — no Aura penalty this time.'})
+
+            from .services import get_roadmap_aura_reward
+            base_penalty = get_roadmap_aura_reward(profile.rank, r.template.difficulty)
+            
+            # Apply class failure multiplier (Paladin doubles penalty)
+            failure_mult = class_modifiers.get_roadmap_failure_aura_multiplier(
+                request.user, profile, r
+            )
+            penalty = int(base_penalty * failure_mult)
+            
             profile.aura -= penalty
             profile.save()
             profile.update_rank()
             
             r.delete()
-            return Response({'status': 'Oath broken. Aura penalty applied.'})
+            return Response({'status': 'Oath broken. Aura penalty applied.', 'aura_penalty': penalty})
         except UserRoadmap.DoesNotExist:
             return Response({'error': 'Roadmap not found'}, status=404)

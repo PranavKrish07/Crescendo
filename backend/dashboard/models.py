@@ -30,6 +30,15 @@ class UserProfile(models.Model):
     days_at_aura_cap = models.PositiveIntegerField(default=0)
     ritual_lockout_until = models.DateTimeField(null=True, blank=True)
 
+    # Class modifier tracking fields
+    last_quest_completed_at = models.DateTimeField(null=True, blank=True)
+    demotion_immunity_until = models.DateTimeField(null=True, blank=True)
+    free_roadmap_abandons_this_month = models.PositiveIntegerField(default=0)
+    last_abandon_reset_date = models.DateField(null=True, blank=True)
+    consecutive_quest_completions = models.PositiveIntegerField(default=0)
+    last_consecutive_completion_at = models.DateTimeField(null=True, blank=True)
+
+
     def __str__(self):
         return f"{self.user.email} — Lv.{self.level}"
 
@@ -58,6 +67,10 @@ class UserProfile(models.Model):
         self.update_rank()
 
     def update_rank(self):
+        # Check for demotion immunity (Warden/Paladin class buff)
+        if self.demotion_immunity_until and self.demotion_immunity_until > timezone.now():
+            return  # Immune to demotion right now
+
         # Only demotions happen automatically. Rank ups require a ritual.
         if self.aura < 900 and self.rank != 'E':
             self.rank = 'E'
@@ -75,12 +88,17 @@ class UserProfile(models.Model):
         if not self.last_checkin:
             return
         
+        # Lazy import to avoid circular dependency
+        from . import class_modifiers
+
         today = timezone.now().date()
         days_passed = (today - self.last_checkin).days
         
         if days_passed > 1:
             missed_days = days_passed - 1
-            if self.streak_freezes >= missed_days:
+            # Ronin Debuff 1 (Isolation Inertia): cannot use streak freezes
+            can_freeze = class_modifiers.can_use_streak_freeze(self.user)
+            if can_freeze and self.streak_freezes >= missed_days:
                 self.streak_freezes -= missed_days
                 self.last_checkin = today - timezone.timedelta(days=1)
                 self.save(update_fields=['streak_freezes', 'last_checkin'])
@@ -93,12 +111,17 @@ class UserProfile(models.Model):
                 if self.last_streak_break_date and self.last_streak_break_date.month != today.month:
                     self.streak_breaks_this_month = 0
                 
-                self.streak_breaks_this_month += 1
+                # Alchemist Debuff 2 (Volatile Chemistry): breaks count as +2
+                break_increment = class_modifiers.get_streak_break_increment(self.user)
+                self.streak_breaks_this_month += break_increment
                 self.last_streak_break_date = today
                 
                 if self.streak_breaks_this_month >= 5:
                     penalty_map = {'E': 45, 'D': 55, 'C': 70, 'B': 90, 'A': 120, 'S': 150}
-                    penalty = penalty_map.get(self.rank, 45)
+                    base_penalty = penalty_map.get(self.rank, 45)
+                    # Phantom Buff 2 (Ghost Protocol): 15% resistance
+                    penalty_mult = class_modifiers.get_streak_penalty_multiplier(self.user)
+                    penalty = int(base_penalty * penalty_mult)
                     self.aura -= penalty
                     self.update_rank()
                 

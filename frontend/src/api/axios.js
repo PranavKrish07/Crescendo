@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8000/api/auth",
+  baseURL: "https://crescendo-xmd9.onrender.com/api/auth",
   headers: {
     "Content-Type": "application/json",
   },

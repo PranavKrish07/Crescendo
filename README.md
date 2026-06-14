@@ -10,7 +10,7 @@ Crescendo is a gamified productivity platform built with Django and React that t
 ### 🎮 RPG Progression System
 * **Global Leveling**: Advance your base level by completing quests, earning XP with an exponentially scaling threshold algorithm.
 * **Aura Energy**: Your primary progression resource. Aura is required for everything and comes with a strict cap based on your rank.
-* **The Streak System**: Duolingo-style daily check-ins. Maintain your streak to keep your Aura safe. Break your streak 5+ times in a month, and suffer devastating Aura penalties based on your rank.
+* **The Streak System**: daily check-ins. Maintain your streak to keep your Aura safe. Break your streak 5+ times in a month, and suffer devastating Aura penalties based on your rank.
 
 ### ⚔️ Archetypes & Aesthetics
 * **Dynamic House Assignment**: Choose between **Grimward** (Red), **Ashborne** (Purple), or **Goldveil** (Amber). Your chosen archetype globally alters the app's entire aesthetic, injecting custom glassmorphism glows and neon accents into your dashboard.

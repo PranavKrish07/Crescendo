@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const dashboardAPI = axios.create({
-  baseURL: "https://crescendo-xmd9.onrender.com/api/dashboard",
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/dashboard`,
   headers: {
     "Content-Type": "application/json",
   },

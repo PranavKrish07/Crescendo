@@ -20,7 +20,7 @@ AUTH_USER_MODEL = 'authentication.User'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Strict string evaluation to prevent accidental True values
-DEBUG = os.environ.get('DEBUG') == 'True'
+DEBUG = os.environ.get('DEBUG')
 
 # Locked for production, open for local dev
 ALLOWED_HOSTS = ['crescendo-xmd9.onrender.com', 'localhost', '127.0.0.1']
@@ -58,7 +58,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://crescendo-tau-five.vercel.app",
+    "https://crescendo-pf8l.vercel.app",
 ]
 
 REST_FRAMEWORK = {

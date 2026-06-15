@@ -58,7 +58,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://crescendo-pf81.vercel.app",
+    "https://crescendo-pf8l.vercel.app",
 ]
 
 REST_FRAMEWORK = {

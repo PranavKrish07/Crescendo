@@ -23,7 +23,7 @@ AUTH_USER_MODEL = 'authentication.User'
 DEBUG = os.environ.get('DEBUG') == 'True'
 
 # Locked for production, open for local dev
-ALLOWED_HOSTS = ['crescendo-xmd9.onrender.com', '127.0.0.1']
+ALLOWED_HOSTS = ['crescendo-xmd9.onrender.com', 'localhost', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -58,7 +58,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://crescendo-pf8l.vercel.app",
+    "https://crescendo-tau-five.vercel.app",
 ]
 
 REST_FRAMEWORK = {
@@ -73,12 +73,12 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
-# Anymail HTTP Email Backend configured for Resend
-EMAIL_BACKEND = 'anymail.backends.resend.EmailBackend'
+# Anymail HTTP Email Backend configured for Brevo
+EMAIL_BACKEND = 'anymail.backends.brevo.EmailBackend'
 ANYMAIL = {
-    "RESEND_API_KEY": os.environ.get("RESEND_API_KEY"),
+    "BREVO_API_KEY": os.environ.get("BREVO_API_KEY"),
 }
-DEFAULT_FROM_EMAIL = "onboarding@resend.dev"
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 ROOT_URLCONF = 'backend.urls'
 

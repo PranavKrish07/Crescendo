@@ -128,7 +128,7 @@ class ForgotPasswordView(APIView):
                 send_mail(
                     'Reset your Crescendo password',
                     f'Your password reset OTP is: {otp_code}\nIt expires in 10 minutes.',
-                    settings.EMAIL_HOST_USER,
+                    settings.DEFAULT_FROM_EMAIL,
                     [user.email],
                     fail_silently=False,
                 )

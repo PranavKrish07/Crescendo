@@ -1,5 +1,6 @@
 # `Crescendo` - Advanced Core Progression Architecture
 
+frontend link: https://crescendo-pf8l.vercel.app/
 backend link: https://crescendo-xmd9.onrender.com/
 
 `Crescendo` is an industrial-grade, full-stack, gamified workflow orchestration and programmatic accountability framework. It completely reimagines productivity architectures by binding transaction-driven quest structures, daily checking mechanics, and structured learning tracks to an immersive RPG-style state engine. Built using a strict decoupled model, the platform leverages a high-performance **Django REST API REST Engine** paired with a highly reactive, state-managed **Vite-React UI Layer**.

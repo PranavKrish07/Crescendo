@@ -5,6 +5,15 @@ backend link: https://crescendo-xmd9.onrender.com/
 
 `Crescendo` is an industrial-grade, full-stack, gamified workflow orchestration and programmatic accountability framework. It completely reimagines productivity architectures by binding transaction-driven quest structures, daily checking mechanics, and structured learning tracks to an immersive RPG-style state engine. Built using a strict decoupled model, the platform leverages a high-performance **Django REST API REST Engine** paired with a highly reactive, state-managed **Vite-React UI Layer**.
 
+<img width="1897" height="867" alt="Screenshot 2026-07-06 074108" src="https://github.com/user-attachments/assets/03cb6a93-64c5-44e5-8ac7-3010b6fa3991" />
+<img width="1917" height="862" alt="Screenshot 2026-07-06 074239" src="https://github.com/user-attachments/assets/0a5be28e-9f22-4b44-b434-d820d61e9025" />
+<img width="1917" height="853" alt="Screenshot 2026-07-06 074205" src="https://github.com/user-attachments/assets/c6d87b6d-4a6b-48bb-a402-a2ed868fadc3" />
+<img width="1892" height="862" alt="Screenshot 2026-07-06 075011" src="https://github.com/user-attachments/assets/767e47f5-2a55-4f21-a8c2-fb3eb896b25b" />
+<img width="1892" height="833" alt="Screenshot 2026-07-06 075202" src="https://github.com/user-attachments/assets/28368ae4-4708-4b92-95af-75aee625e60c" />
+
+
+
+
 ---
 
 ## 🏗️ System Architecture & Codebase Design
